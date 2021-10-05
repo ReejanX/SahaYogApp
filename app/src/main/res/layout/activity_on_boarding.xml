@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".onBoarding.OnBoardingActivity">
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/skipBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/lato_regular"
+        android:padding="-16dp"
+        android:text="Skip"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mikhaellopez.circleview.CircleView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:translationX="-120dp"
+        android:translationY="-80dp"
+        app:cv_color="#45ea5b70"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mikhaellopez.circleview.CircleView
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:translationX="-120dp"
+        android:translationY="500dp"
+        app:cv_color="#80ea5b70"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mikhaellopez.circleview.CircleView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:translationX="290dp"
+        android:translationY="300dp"
+        app:cv_color="#20ea5b70"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mikhaellopez.circleview.CircleView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:translationX="260dp"
+        android:translationY="-30dp"
+        app:cv_color="#60ea5b70"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skipBtn">
+
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="48dp"
+        app:ci_drawable="@drawable/circle_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/next"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circle_bg"
+        android:drawableEnd="@drawable/forward"
+        android:fontFamily="@font/lato_bold"
+        android:padding="12dp"
+        android:text="Next"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"></androidx.appcompat.widget.AppCompatButton>
+</androidx.constraintlayout.widget.ConstraintLayout>
