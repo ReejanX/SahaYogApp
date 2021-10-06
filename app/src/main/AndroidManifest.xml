@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SahayogApp">
         <activity
+            android:name=".dashboard.DashActivity"
+            android:exported="true" />
+        <activity
             android:name=".auth.AuthActivity"
             android:exported="true" />
         <activity
@@ -27,7 +30,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -2,4 +2,15 @@
     <string name="app_name">Sahayog App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="blood_group">
+        <item>A Positive</item>
+        <item>A Negative</item>
+        <item>B Positive</item>
+        <item>B Negative</item>
+        <item>AB Positive</item>
+        <item>AB Negative</item>
+        <item>O Positive</item>
+        <item>O Negative</item>
+    </string-array>
+
 </resources>
