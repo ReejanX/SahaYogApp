@@ -71,9 +71,38 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
+        android:translationZ="40dp"
         app:ci_drawable="@drawable/circle_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.scwang.wave.MultiWaveHeader
+         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="300dp"
+        android:id="@+id/wave"
+        android:translationZ="-20dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:mwhCloseColor="@color/primary"
+        app:mwhProgress="1"
+        app:mwhStartColor="@color/primary"
+        app:mwhVelocity="1"
+        app:mwhWaveHeight="140dp" />
+    <com.scwang.wave.MultiWaveHeader
+        android:translationZ="-20dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="300dp"
+        android:id="@+id/waveT"
+        android:scaleY="-1"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:mwhCloseColor="@color/primary"
+        app:mwhProgress="1"
+        app:mwhStartColor="@color/primary"
+        app:mwhVelocity="1"
+        app:mwhWaveHeight="140dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/next"
@@ -83,7 +112,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="80dp"
-        android:background="@drawable/circle_bg"
+        android:background="@drawable/primary_bg"
         android:drawableEnd="@drawable/forward"
         android:fontFamily="@font/lato_bold"
         android:padding="12dp"

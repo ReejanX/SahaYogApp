@@ -82,6 +82,7 @@ class OnBoardingActivity : AppCompatActivity() {
 
     }
 
+
     private fun onBoardingFinished() {
         val sharedPreferences =
             this.getSharedPreferences("onBoardingFinished", Context.MODE_PRIVATE)

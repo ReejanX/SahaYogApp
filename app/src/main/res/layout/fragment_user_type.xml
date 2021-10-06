@@ -133,7 +133,7 @@
         android:layout_margin="24dp"
         android:layout_marginTop="60dp"
         android:layout_marginRight="24dp"
-        android:background="@drawable/circle_bg"
+        android:background="@drawable/primary_bg"
         android:drawableEnd="@drawable/forward"
         android:fontFamily="@font/lato_bold"
         android:inputType="number"
