@@ -18,12 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.fyp.sahayogapp.custom.CustomTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:fontFamily="@font/lato_bold"
         android:text="Sign Up"
         android:textColor="@color/blue"
         android:textSize="32sp"

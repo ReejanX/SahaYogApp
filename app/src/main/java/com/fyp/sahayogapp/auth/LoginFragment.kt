@@ -1,18 +1,18 @@
 package com.fyp.sahayogapp.auth
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.dashboard.DashActivity
+import java.util.*
 
 
 class LoginFragment : Fragment() {
@@ -71,8 +71,6 @@ class LoginFragment : Fragment() {
             }
 
         }
-
-
     }
 
     private fun rememberUnChecked() {
@@ -117,6 +115,16 @@ class LoginFragment : Fragment() {
             password.error = "Enter Password"
             return
         }
+        if (email.text.toString().lowercase(Locale.getDefault())
+            != "reejan" || password.text.toString() != "reejan"
+        ) {
+            Toast.makeText(requireContext(), "You not the Boss", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        Toast.makeText(requireContext(), "Welcome Boss", Toast.LENGTH_LONG).show()
+        startActivity(Intent(requireContext(), DashActivity::class.java))
+
     }
 }
 

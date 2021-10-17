@@ -14,5 +14,5 @@
     <color name="primary">#ea5b70</color>
     <color name="pink">#ff8e9e</color>
     <color name="blue">#1E2D50</color>
-
+    <color name="statusBar">#ec6377</color>
 </resources>

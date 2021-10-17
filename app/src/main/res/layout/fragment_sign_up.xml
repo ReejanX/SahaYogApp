@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".auth.SignUpFragment">
 
-
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/wave"
         android:layout_width="match_parent"
@@ -20,7 +19,7 @@
         app:mwhVelocity="1"
         app:mwhWaveHeight="40dp" />
 
-    <TextView
+    <com.fyp.sahayogapp.custom.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

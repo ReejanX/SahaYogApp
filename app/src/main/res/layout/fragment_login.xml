@@ -24,24 +24,24 @@
             app:mwhVelocity="1"
             app:mwhWaveHeight="40dp" />
 
-        <TextView
+        <com.fyp.sahayogapp.custom.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/lato_bold"
+            app:fontName="lato_bold"
             android:text="Login"
             android:textColor="@color/blue"
             android:textSize="32sp"
             android:textStyle="bold"
             android:translationZ="40dp" />
 
-        <TextView
+        <com.fyp.sahayogapp.custom.CustomTextView
             android:id="@+id/txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:fontFamily="@font/lato_regular"
+            app:fontName="lato_regular"
             android:text="Please Login to your account"
             android:textColor="#901E2D50"
             android:textSize="18sp"
@@ -163,7 +163,7 @@
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.fyp.sahayogapp.custom.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Don't have an Account?" />
