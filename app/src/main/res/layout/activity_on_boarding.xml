@@ -34,7 +34,7 @@
         android:layout_height="450dp"
         android:translationX="-120dp"
         android:translationY="500dp"
-        app:cv_color="#80ea5b70"
+        app:cv_color="#20ea5b70"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,6 +70,7 @@
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        app:layout_constraintVertical_bias=".65"
         android:layout_marginTop="48dp"
         app:ci_drawable="@drawable/circle_bg"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/circle_bg"
         android:drawableEnd="@drawable/forward"
         android:fontFamily="@font/lato_bold"

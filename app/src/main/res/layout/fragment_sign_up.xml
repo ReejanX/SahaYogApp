@@ -9,21 +9,23 @@
     android:orientation="vertical"
     tools:context=".auth.SignUpFragment">
 
-    <com.scwang.wave.MultiWaveHeader
-        android:id="@+id/wave"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        app:mwhCloseColor="@color/primary"
-        app:mwhProgress="1"
-        app:mwhStartColor="@color/primary"
-        app:mwhVelocity="1"
-        app:mwhWaveHeight="40dp" />
+        <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <com.fyp.sahayogapp.custom.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:fontFamily="@font/lato_bold"
         android:text="Sign Up"
         android:textColor="@color/blue"
@@ -36,10 +38,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:paddingBottom="16dp"
         android:fontFamily="@font/lato_regular"
+        android:textSize="18sp"
         android:text="Sign up and create a new account"
         android:textColor="#901E2D50"
-        android:translationZ="40dp" />
+         />
 
     <ScrollView
 
@@ -69,7 +73,6 @@
                 android:layout_marginEnd="24dp"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:hintTextColor="@color/blue"
-                app:startIconDrawable="@drawable/user"
 
                 >
 
@@ -91,7 +94,7 @@
                 android:layout_marginEnd="24dp"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:hintTextColor="@color/blue"
-                app:startIconDrawable="@drawable/mail">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
@@ -110,7 +113,7 @@
                 android:layout_marginEnd="24dp"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:hintTextColor="@color/blue"
-                app:startIconDrawable="@drawable/heart">
+                >
 
                 <AutoCompleteTextView
                     android:id="@+id/bloodGroup"
@@ -120,16 +123,34 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
+<com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:hintTextColor="@color/blue"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Gender"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="32dp"
                 app:boxBackgroundColor="@android:color/transparent"
                 app:hintTextColor="@color/blue"
-                app:startIconDrawable="@drawable/phone">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneNumber"
@@ -139,13 +160,14 @@
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/signUp"
                 style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginRight="24dp"
                 android:background="@drawable/circle_bg"
                 android:drawableEnd="@drawable/forward"
@@ -158,9 +180,10 @@
                 android:textSize="22sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+            android:paddingTop="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -179,12 +202,9 @@
                     android:textAllCaps="false"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
+        </LinearLayout>
+    </ScrollView>
 
         </LinearLayout>
 
 
-    </ScrollView>
-
-
-</LinearLayout>

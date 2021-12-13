@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.permissions.PermissionAlerts
+import com.fyp.sahayogapp.permissions.PermissionLocation
 import com.google.android.material.card.MaterialCardView
 
 
@@ -35,6 +37,7 @@ class UserTypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
+        PermissionLocation.checkLocationAccess(requireActivity(),requireContext())
         donorCard.setOnClickListener {
             donorCard.isChecked = true
             bBankCard.isChecked = false
@@ -45,7 +48,7 @@ class UserTypeFragment : Fragment() {
             donorCard.isChecked = false
         }
         backBtn.setOnClickListener {
-            nav(backBtn, R.id.action_signUpFragment_to_loginFragment)
+            nav(backBtn, R.id.action_userTypeFragment_to_loginFragment)
         }
 
         signupBtn.setOnClickListener {
@@ -59,15 +62,17 @@ class UserTypeFragment : Fragment() {
     }
 
     private fun navigate() {
-        if (donorCard.isChecked) {
-            Toast.makeText(requireContext(), "donor you are hmmm", Toast.LENGTH_LONG).show()
-            nav(signupBtn, R.id.action_userTypeFragment_to_signUpFragment)
-        } else if (bBankCard.isChecked) {
-            Toast.makeText(requireContext(), "hospital you are hmmm", Toast.LENGTH_LONG).show()
+        when {
+            donorCard.isChecked -> {
+                nav(signupBtn, R.id.action_userTypeFragment_to_signUpFragment)
+            }
+            bBankCard.isChecked -> {
+                nav(signupBtn, R.id.action_userTypeFragment_to_BBSignupFragment)
+            }
+            else -> {
+                Toast.makeText(requireContext(), "Please select User Type", Toast.LENGTH_LONG).show()
 
-        } else {
-            Toast.makeText(requireContext(), "who are you", Toast.LENGTH_LONG).show()
-
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity
 import com.fyp.sahayogapp.onBoarding.OnBoardingActivity
+import com.fyp.sahayogapp.permissions.PermissionLocation
 
 
 class SplashActivity : AppCompatActivity() {
@@ -26,14 +27,14 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this, OnBoardingActivity::class.java))
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
                 finish()
-            }, (secondsDelayed * 3000).toLong())
+            }, (secondsDelayed * 1000).toLong())
         } else {
             val secondsDelayed: Int = 1
             Handler().postDelayed(Runnable {
                 startActivity(Intent(this, AuthActivity::class.java))
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left)
                 finish()
-            }, (secondsDelayed * 3000).toLong())
+            }, (secondsDelayed * 1000).toLong())
         }
 
     }

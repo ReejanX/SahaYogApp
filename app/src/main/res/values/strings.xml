@@ -12,8 +12,15 @@
         <item>O Positive</item>
         <item>O Negative</item>
     </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+
+    </string-array>
     <string name="latoBold">lato_bold</string>
     <string name="latolight">lato_light</string>
     <string name="latoRegular">lato_regular</string>
     <string name="latoThin">lato_thin</string>
+    <string name="signUp">Sign Up</string>
 </resources>
