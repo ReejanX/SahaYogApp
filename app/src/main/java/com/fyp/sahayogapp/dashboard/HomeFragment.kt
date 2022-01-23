@@ -1,22 +1,29 @@
 package com.fyp.sahayogapp.dashboard
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.custom.CustomTextView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+import com.fyp.sahayogapp.dashboard.adapters.RequestListAdapter
+import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
+import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
 
 
 class HomeFragment : Fragment() {
@@ -24,6 +31,9 @@ class HomeFragment : Fragment() {
     lateinit var locationBtn : Button
     lateinit var locationTv : CustomTextView
     lateinit var geocoder: Geocoder
+    lateinit var userListRecyclerView: RecyclerView
+    lateinit var  requestListAdapter: RequestListAdapter
+    lateinit var requestViewModel :RequestViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -46,15 +56,42 @@ class HomeFragment : Fragment() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
         locationBtn = view.findViewById<Button>(R.id.locationBtn)
         locationTv = view.findViewById(R.id.locationTV)
+        userListRecyclerView = view.findViewById(R.id.userListRecycler)
+        requestListAdapter = RequestListAdapter()
+
         locationBtn.setOnClickListener {
             fetchLocation()
         }
+        view.findViewById<Button>(R.id.getRequestBtn).setOnClickListener {
+             initViewModel()   }
+        initUserListRecycler()
+//        initViewModel()
+    }
+    fun initUserListRecycler (){
+        userListRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = requestListAdapter
+        }
+    }
+
+    fun initViewModel(){
+
+       requestViewModel= ViewModelProvider(this).get(RequestViewModel::class.java)
+        requestViewModel.getDonationList()
+
+        requestViewModel.getDonationListObserver().observe(requireActivity(), Observer<List<DonationRequestModel>> {
+            if (it==null){
+
+                Toast.makeText(requireContext(), "No results Found", Toast.LENGTH_SHORT).show()
+            }else{
+
+                requestListAdapter.userList = it.toMutableList()
+                requestListAdapter.notifyDataSetChanged()
+
+            }
+        })
 
     }
-    fun init (view: View){
-//                initialize function for views
-    }
-
 
 
     private fun fetchLocation(){

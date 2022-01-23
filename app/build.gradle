@@ -51,5 +51,10 @@ dependencies {
     implementation 'com.mikhaellopez:circleview:1.4.0'
     //fusedLocationProvider
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    //api clients
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
+    implementation "com.itkacher.okhttpprofiler:okhttpprofiler:1.0.7"
 
 }
