@@ -7,12 +7,24 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.hideKeyboard
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
+import com.fyp.sahayogapp.auth.model.RegisterUser
+import com.fyp.sahayogapp.auth.viewModel.RegisterUserViewModel
+import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
 import com.fyp.sahayogapp.permissions.PermissionLocation
+import java.net.UnknownServiceException
 
+private const val NAME = "NAME"
+private const val EMAIL = "EMAIL"
+private const val BLOODGROUP = "BLOODGROUP"
+private const val GENDER = "GENDER"
+private const val PHONENUMBER = "PHONENUMBER"
+private const val USERTYPE = "USERTYPE"
 
 class SignUpFragment : Fragment() {
     private lateinit var root: LinearLayout
@@ -25,6 +37,7 @@ class SignUpFragment : Fragment() {
     private lateinit var email: EditText
     private lateinit var phoneNumber: EditText
     private lateinit var back : ImageButton
+    private lateinit var registerUserViewModel :RegisterUserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +56,7 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView(view)
+        registerUserViewModel= ViewModelProvider(this).get(RegisterUserViewModel::class.java)
         root.setOnClickListener {
             it.hideKeyboard(requireContext())
         }
@@ -55,6 +69,10 @@ class SignUpFragment : Fragment() {
         back.setOnClickListener{
             nav(view,R.id.action_signUpFragment_to_userTypeFragment)
         }
+        signUpBtn.setOnClickListener {
+            navigateToPassword()
+
+        }
 
         val bloods = resources.getStringArray(R.array.blood_group)
         val bloodGroupAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_layout, bloods)
@@ -65,6 +83,23 @@ class SignUpFragment : Fragment() {
         genderAC.setAdapter(genderAdapter)
 
     }
+
+    private fun navigateToPassword() {
+
+        var bundle = Bundle()
+        bundle.putString(NAME, name.text.toString())
+        bundle.putString(EMAIL, email.text.toString())
+        bundle.putString(BLOODGROUP, bloodGroup.text.toString())
+        bundle.putString(GENDER, genderAC.text.toString())
+        bundle.putString(PHONENUMBER, phoneNumber.text.toString())
+        bundle.putString(USERTYPE, "donor")
+
+        Navigation.findNavController(loginBtn)
+            .navigate(R.id.action_signUpFragment_to_passwordFragment, bundle)
+
+    }
+
+
     //initializing the components of the view
     private fun initView(view: View) {
         root = view.findViewById(R.id.root)

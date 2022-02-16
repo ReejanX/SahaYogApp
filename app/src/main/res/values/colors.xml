@@ -10,7 +10,8 @@
 
 
 
-
+    <color name="colorAccent">#1E2D50</color>
+    <color name="colorDefault">#dcdcdc</color>
     <color name="primary">#ea5b70</color>
     <color name="pink">#ff8e9e</color>
     <color name="blue">#1E2D50</color>

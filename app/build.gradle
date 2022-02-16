@@ -49,6 +49,8 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.6'
     //circleView
     implementation 'com.mikhaellopez:circleview:1.4.0'
+    //pinView
+    implementation 'io.github.chaosleung:pinview:1.4.4'
     //fusedLocationProvider
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     //api clients

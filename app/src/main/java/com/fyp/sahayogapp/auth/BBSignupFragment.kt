@@ -7,10 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.hideKeyboard
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
 import com.google.android.material.textfield.TextInputLayout
+private const val NAME = "NAME"
+private const val EMAIL = "EMAIL"
+private const val BLOODGROUP = "BLOODGROUP"
+private const val GENDER = "GENDER"
+private const val PHONENUMBER = "PHONENUMBER"
+private const val USERTYPE = "USERTYPE"
+private const val REGISTRATION = "REGISTRATION"
+private const val LANDLINE = "LANDLINE"
+private const val WORKDAY = "WORKDAY"
+private const val OPENTIME = "OPENTIME"
+private const val CLOSETIME = "CLOSETIME"
+private const val LATITUDE = "LATITUDE"
+private const val LONGITUDE = "LONGITUDE"
 
 class BBSignupFragment : Fragment() {
     private lateinit var root: LinearLayout
@@ -56,11 +70,25 @@ class BBSignupFragment : Fragment() {
        location.setOnClickListener {
            location.setText("Hello there")
        }
+        signUpBtn.setOnClickListener {
+            nav(view,R.id.action_BBSignupFragment_to_passwordFragment)
+        }
 
     }
 
 
+    private fun navigateToPassword() {
 
+        var bundle = Bundle()
+        bundle.putString(NAME, name.text.toString())
+        bundle.putString(EMAIL, email.text.toString())
+        bundle.putString(PHONENUMBER, phoneNumber.text.toString())
+        bundle.putString(USERTYPE, "donor")
+
+        Navigation.findNavController(loginBtn)
+            .navigate(R.id.action_signUpFragment_to_passwordFragment, bundle)
+
+    }
 
     private fun initView(view: View) {
         root = view.findViewById(R.id.root)

@@ -2,23 +2,26 @@ package com.fyp.sahayogapp.auth
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.REMEMBER_KEY
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.REMEMBER_PREF
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.hideKeyboard
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
 import com.fyp.sahayogapp.dashboard.DashActivity
+import com.fyp.sahayogapp.dashboard.model.APIResponse
+import com.fyp.sahayogapp.dashboard.model.UserLogin
+import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
 import com.fyp.sahayogapp.permissions.PermissionLocation
 import java.util.*
+import kotlin.math.log
 
 
 class LoginFragment : Fragment() {
@@ -30,7 +33,7 @@ class LoginFragment : Fragment() {
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var forgot: Button
-
+    private lateinit var loginUserViewModel: LoginUserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
+        loginUserViewModel= ViewModelProvider(this).get(LoginUserViewModel::class.java)
         PermissionLocation.checkLocationAccess(requireActivity(),requireContext())
         root.setOnClickListener {
             it.hideKeyboard(requireContext())
@@ -67,6 +71,7 @@ class LoginFragment : Fragment() {
             nav(signUpBtn, R.id.action_loginFragment_to_userTypeFragment)
         }
         loginBtn.setOnClickListener {
+
             validate()
         }
         if (getFromPref(REMEMBER_KEY, REMEMBER_PREF) == true){
@@ -86,6 +91,23 @@ class LoginFragment : Fragment() {
 //        }
 
     }
+
+    private fun loginUserObservable() {
+        loginUserViewModel.loginUserObservable().observe(requireActivity(),Observer <APIResponse?>{
+            if (it == null){
+                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+            }
+            if (it.code=="200"){
+
+                startActivity(Intent(requireContext(), DashActivity::class.java))
+                Toast.makeText(context, it.data.user_name, Toast.LENGTH_SHORT).show()
+            }else{
+
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     //updating sharedPreferences when unchecked keep me logged in
     private fun rememberUnChecked() {
         val sharedPreferences =
@@ -131,29 +153,39 @@ class LoginFragment : Fragment() {
             email.error = "Enter Email Address"
             return
         }
-
         if (password.text.isNullOrEmpty()) {
             password.error = "Enter Password"
             return
         }
-        if (email.text.toString().lowercase(Locale.getDefault())
-            == "reejan" || password.text.toString() == "reejan"
-        ) {
-            if (checkBox.isChecked()){
-            rememberChecked()
-        }
+        loginUser()
+        loginUserObservable()
 
-            Toast.makeText(requireContext(), "Welcome Boss", Toast.LENGTH_LONG).show()
-            startActivity(Intent(requireContext(), DashActivity::class.java))
 
-        }else{
-        Toast.makeText(requireContext(), "You not the Boss", Toast.LENGTH_LONG).show()
-            return
-        }
+//        if (email.text.toString().lowercase(Locale.getDefault())
+//            == "reejan" || password.text.toString() == "reejan"
+//        ) {
+//            if (checkBox.isChecked()){
+//            rememberChecked()
+//        }
+//
+//            Toast.makeText(requireContext(), "Welcome Boss", Toast.LENGTH_LONG).show()
+//            startActivity(Intent(requireContext(), DashActivity::class.java))
+//
+//        }else{
+//        Toast.makeText(requireContext(), "You not the Boss", Toast.LENGTH_LONG).show()
+//            return
+//        }
 
 
 
 
     }
+
+    private fun loginUser() {
+        val userLogin = UserLogin(email.text.toString(),password.text.toString())
+
+        loginUserViewModel.loginUser(userLogin)
+    }
 }
+
 

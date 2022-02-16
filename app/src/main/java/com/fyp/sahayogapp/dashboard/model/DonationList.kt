@@ -16,6 +16,4 @@ data class DonationRequestModel(
     val venue_contact : String,
     val venue_name : String,
 
-
-
 )

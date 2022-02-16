@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
     fun initViewModel(){
 
        requestViewModel= ViewModelProvider(this).get(RequestViewModel::class.java)
-        requestViewModel.getDonationList()
+
 
         requestViewModel.getDonationListObserver().observe(requireActivity(), Observer<List<DonationRequestModel>> {
             if (it==null){
@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
 
             }
         })
-
+        requestViewModel.getDonationList()
     }
 
 
