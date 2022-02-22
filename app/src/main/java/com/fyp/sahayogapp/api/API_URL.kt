@@ -9,5 +9,6 @@ object API_URL {
     const val SEND_OTP = "auth/send-reset-otp"
     const val OTP_VERIFY = "auth/otp-check"
     const val RESET_PASSWORD = "auth/reset-password"
+    const val CHANGE_PASSWORD = "profile/change-password"
 
 }

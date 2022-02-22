@@ -112,6 +112,9 @@ class PasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView(view)
+        if (resetKey == "001") {
+            signUp.text="Reset Password"
+        }
         registerUserViewModel = ViewModelProvider(this).get(RegisterUserViewModel::class.java)
         forgotPasswordViewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
         etPassword.addTextChangedListener(object : TextWatcher {

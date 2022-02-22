@@ -6,6 +6,12 @@ data class UserLogin(
 
 )
 
+data class ChangePassword(
+    val email:String,
+    val old_password:String,
+    val new_password:String
+)
+
 data class APIResponse(
     val success : String,
     val code : String,
@@ -16,8 +22,10 @@ data class APIResponse(
 
 data class LoginResponse(
      val token : String,
+     val user_id: String,
      val user_name : String,
      val user_email: String,
      val user_role: String
 
 )
+

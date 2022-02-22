@@ -30,6 +30,7 @@ class OTPFragment : Fragment() {
 
     private lateinit var pinView: PinView
     private lateinit var continueBtn : Button
+    private lateinit var resendBtn : Button
     private lateinit var backBtn : ImageButton
     private lateinit var forgotPasswordViewModel: ForgotPasswordViewModel
     private var email = ""
@@ -55,7 +56,7 @@ class OTPFragment : Fragment() {
         continueBtn = view.findViewById(R.id.continueBtn)
         pinView.isFocused
         backBtn=view.findViewById(R.id.backBtn)
-
+        resendBtn = view.findViewById(R.id.resendBtn)
         backBtn.setOnClickListener{
             nav(view,R.id.action_OTPFragment_to_forgotPasswordFragment)
         }
@@ -67,8 +68,31 @@ class OTPFragment : Fragment() {
             }
             checkOTP()
             checkOTPObservable()
-            Toast.makeText(requireContext(), pinView.text, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(requireContext(), pinView.text, Toast.LENGTH_SHORT).show()
         }
+
+        resendBtn.setOnClickListener {
+            sendOTP()
+            sendOTPObservable()
+        }
+    }
+
+    private fun sendOTP() {
+        val email = ResetPassword(email,"","")
+        forgotPasswordViewModel.sendOTP(email)
+    }
+    private fun sendOTPObservable() {
+        forgotPasswordViewModel.sendOTPObservable().observe(requireActivity(), Observer <APIResponse?>{
+            if (it == null){
+                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+            }
+            if (it.code=="200"){
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+            }else{
+
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun checkOTP() {
@@ -83,7 +107,7 @@ class OTPFragment : Fragment() {
 
             }
             if(it.code == "200"){
-                Toast.makeText(requireContext(), "OTP Verified", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "OTP Verified", Toast.LENGTH_SHORT).show()
                 navigateToResetPassword()
             }
             else{

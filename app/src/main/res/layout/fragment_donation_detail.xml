@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dashboard.DonationDetailFragment">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:src="@drawable/back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/downloadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:src="@drawable/save"
+                android:tint="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.fyp.sahayogapp.custom.CustomTextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:text="Donation Details"
+                android:textColor="@color/blue"
+                android:textSize="26sp"
+                app:fontName="lato_bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/backBtn" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/unitCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cardview_dark_background"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintTop_toBottomOf="@id/title">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp">
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/remainingUnitTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="3"
+                        android:textColor="@color/blue"
+                        android:textSize="32sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/remainingunits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="Units remaining"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintStart_toStartOf="@id/remainingUnitTV"
+                        app:layout_constraintTop_toBottomOf="@id/remainingUnitTV"
+
+                        />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/totalUnitTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Total Units 5"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintBottom_toBottomOf="@id/remainingUnitTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/requestCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/cardview_dark_background"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintTop_toBottomOf="@id/unitCard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/typeCard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            android:backgroundTint="@color/blue"
+                            app:cardCornerRadius="8dp"
+                            app:layout_constraintStart_toStartOf="@id/layout1"
+                            app:layout_constraintTop_toTopOf="@id/layout1"
+
+                            >
+
+                            <com.fyp.sahayogapp.custom.CustomTextView
+
+                                android:id="@+id/bloodType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"
+                                android:text="B+"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                app:fontName="lato_bold" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:id="@+id/layoutTop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16sp"
+                            android:layout_marginTop="8sp"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toEndOf="@id/typeCard"
+                            app:layout_constraintTop_toTopOf="@id/typeCard">
+
+                            <com.fyp.sahayogapp.custom.CustomTextView
+                                android:id="@+id/requestTypeTV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Blood Request"
+                                android:textColor="@color/blue"
+                                android:textSize="20sp"
+                                app:fontName="lato_bold" />
+
+                            <com.fyp.sahayogapp.custom.CustomTextView
+                                android:id="@+id/requestStatusTV"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="In progress"
+                                android:textColor="@color/blue"
+                                android:textSize="16sp"
+                                app:fontName="lato_bold" />
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="#E2E2E2"
+                        app:layout_constraintTop_toBottomOf="@id/layout1" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/messageTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:paddingVertical="8dp"
+                        android:text="loren ipsum "
+                        app:fontName="lato_regular"
+                        app:layout_constraintTop_toBottomOf="@id/line1" />
+
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/patientName"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Patient Name"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/messageTV" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/patientTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="Reejan Sun Shrestha"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/messageTV" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/valid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Valid Till"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/patientName" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/validTV"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="June 3"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/patientTV" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/issued"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Issued On"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/valid" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/issuedTV"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="June 1"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/validTV" />
+
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="#E2E2E2"
+                        app:layout_constraintTop_toBottomOf="@id/issuedTV" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/issuedBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="By"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/line" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/issuedByTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Reejan Sun Shrestha"
+                        android:textColor="@color/blue"
+                        android:textSize="12sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintStart_toEndOf="@id/issuedBy"
+                        app:layout_constraintTop_toBottomOf="@id/line" />
+
+                    <ImageButton
+                        android:id="@+id/callBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/phone"
+                        app:layout_constraintBottom_toBottomOf="@id/issuedBy"
+                        app:layout_constraintEnd_toEndOf="@id/patientTV"
+                        app:layout_constraintTop_toTopOf="@id/issuedBy"
+                        app:tint="@color/blue" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/hospitalCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="16dp"
+                android:background="@color/cardview_dark_background"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/requestCard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp">
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/hospitalTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Hospital Info"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/hospitalName"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="Bir Hospital"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/hospitalTv" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Address"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/hospitalName" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/addressTV"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="Ktm, Nepal"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/address" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Open"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/addressTV" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/openTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="5:00 AM"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/open" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Close"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/open" />
+
+                    <com.fyp.sahayogapp.custom.CustomTextView
+                        android:id="@+id/closeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:text="10:00 PM"
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        app:fontName="lato_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/close" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="36dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/appointment"
+                style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:background="@drawable/circle_bg"
+                android:fontFamily="@font/lato_bold"
+                android:inputType="number"
+                android:padding="12dp"
+                android:src="@drawable/calendericon"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/donate"
+                style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/circle_bg"
+                android:drawableEnd="@drawable/forward"
+                android:fontFamily="@font/lato_bold"
+                android:inputType="number"
+                android:padding="12dp"
+                android:text="Donate Now"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

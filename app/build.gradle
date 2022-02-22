@@ -51,8 +51,10 @@ dependencies {
     implementation 'com.mikhaellopez:circleview:1.4.0'
     //pinView
     implementation 'io.github.chaosleung:pinview:1.4.4'
-    //fusedLocationProvider
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    //google map service
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.google.android.gms:play-services-places:16.1.0'
     //api clients
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

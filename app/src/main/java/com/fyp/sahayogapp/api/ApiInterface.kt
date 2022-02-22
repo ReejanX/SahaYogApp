@@ -3,12 +3,11 @@ package com.fyp.sahayogapp.api
 import com.fyp.sahayogapp.auth.model.RegisterUser
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.dashboard.model.APIResponse
-import retrofit2.http.GET
+import com.fyp.sahayogapp.dashboard.model.ChangePassword
 import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
 import com.fyp.sahayogapp.dashboard.model.UserLogin
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiInterface {
@@ -26,8 +25,15 @@ interface ApiInterface {
 
     @POST(API_URL.OTP_VERIFY)
     fun checkOTP(@Body params: ResetPassword) :Call<APIResponse>
-    @POST(API_URL.RESET_PASSWORD)
+
+    @PUT(API_URL.RESET_PASSWORD)
     fun resetPassword(@Body params: ResetPassword): Call<APIResponse>
+
+    @PUT(API_URL.CHANGE_PASSWORD)
+    fun changePassword(
+        @Header("token")  basicToken: String,
+        @Body params: ChangePassword): Call<APIResponse>
+
 
 
 }

@@ -20,6 +20,9 @@ import com.fyp.sahayogapp.dashboard.model.APIResponse
 import com.fyp.sahayogapp.dashboard.model.UserLogin
 import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
 import com.fyp.sahayogapp.permissions.PermissionLocation
+import com.fyp.sahayogapp.utils.PreferenceHelper.init
+import com.fyp.sahayogapp.utils.PreferenceHelper.saveAccessToken
+import com.fyp.sahayogapp.utils.PreferenceHelper.saveUserId
 import java.util.*
 import kotlin.math.log
 
@@ -95,12 +98,16 @@ class LoginFragment : Fragment() {
     private fun loginUserObservable() {
         loginUserViewModel.loginUserObservable().observe(requireActivity(),Observer <APIResponse?>{
             if (it == null){
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                return@Observer
             }
             if (it.code=="200"){
 
                 startActivity(Intent(requireContext(), DashActivity::class.java))
-                Toast.makeText(context, it.data.user_name, Toast.LENGTH_SHORT).show()
+                init(requireActivity())
+                saveAccessToken(it.data.token)
+                saveUserId(it.data.user_id, it.data.user_role)
+//                Toast.makeText(context, it.data.user_name, Toast.LENGTH_SHORT).show()
             }else{
 
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()

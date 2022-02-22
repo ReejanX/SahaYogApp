@@ -41,6 +41,7 @@
         android:text="Yog"/>
 </LinearLayout>
 </LinearLayout>
+
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/wave"
         android:layout_width="match_parent"
@@ -49,10 +50,10 @@
         android:backgroundTint="@color/primary"
         android:scaleY="-1"
         app:mwhCloseColor="@color/primary"
-        app:mwhWaveHeight="60dp"
+        app:mwhProgress="1"
         app:mwhStartColor="@color/primary"
         app:mwhVelocity="1"
-        app:mwhProgress="1"
-        app:mwhWaves="MultiWave"/>
+        app:mwhWaveHeight="60dp"
+        app:mwhWaves="MultiWave" />
 
 </RelativeLayout>
