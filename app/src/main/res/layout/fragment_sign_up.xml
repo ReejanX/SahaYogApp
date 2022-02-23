@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".auth.SignUpFragment">
+    tools:context=".auth.frags.SignUpFragment">
 
         <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/backBtn"

@@ -1,23 +1,17 @@
-package com.fyp.sahayogapp.auth
+package com.fyp.sahayogapp.auth.frags
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.hideKeyboard
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
-import com.fyp.sahayogapp.auth.model.RegisterUser
 import com.fyp.sahayogapp.auth.viewModel.RegisterUserViewModel
-import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
-import com.fyp.sahayogapp.permissions.PermissionLocation
-import java.net.UnknownServiceException
 
 private const val NAME = "NAME"
 private const val EMAIL = "EMAIL"

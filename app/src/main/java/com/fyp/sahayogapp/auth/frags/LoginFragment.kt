@@ -1,4 +1,4 @@
-package com.fyp.sahayogapp.auth
+package com.fyp.sahayogapp.auth.frags
 
 import android.content.Context
 import android.content.Intent
@@ -17,6 +17,7 @@ import com.fyp.sahayogapp.auth.AuthActivity.Companion.hideKeyboard
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
 import com.fyp.sahayogapp.dashboard.DashActivity
 import com.fyp.sahayogapp.dashboard.model.APIResponse
+import com.fyp.sahayogapp.dashboard.model.LoginResponse
 import com.fyp.sahayogapp.dashboard.model.UserLogin
 import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
 import com.fyp.sahayogapp.permissions.PermissionLocation
@@ -24,7 +25,6 @@ import com.fyp.sahayogapp.utils.PreferenceHelper.init
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveAccessToken
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveUserId
 import java.util.*
-import kotlin.math.log
 
 
 class LoginFragment : Fragment() {
@@ -96,7 +96,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUserObservable() {
-        loginUserViewModel.loginUserObservable().observe(requireActivity(),Observer <APIResponse?>{
+        loginUserViewModel.loginUserObservable().observe(requireActivity(),Observer <LoginResponse?>{
             if (it == null){
                 Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
                 return@Observer

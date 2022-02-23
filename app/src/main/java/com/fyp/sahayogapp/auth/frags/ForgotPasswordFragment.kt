@@ -1,6 +1,5 @@
-package com.fyp.sahayogapp.auth
+package com.fyp.sahayogapp.auth.frags
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
 
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.auth.viewModel.ForgotPasswordViewModel
-import com.fyp.sahayogapp.dashboard.DashActivity
 import com.fyp.sahayogapp.dashboard.model.APIResponse
 
 private const val EMAIL = "EMAIL"

@@ -1,4 +1,4 @@
-package com.fyp.sahayogapp.auth
+package com.fyp.sahayogapp.auth.frags
 
 import android.os.Bundle
 import android.text.InputFilter

@@ -1,10 +1,14 @@
-package com.fyp.sahayogapp.dashboard.request
+package com.fyp.sahayogapp.donation.frags
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
 import com.fyp.sahayogapp.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,6 +25,12 @@ class RequestFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var bloodRadio: RadioButton
+    private lateinit var plateletRadio: RadioButton
+
+    private lateinit var continueBtn : Button
+    private var requestType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +46,33 @@ class RequestFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_request, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView(view)
+        continueBtn.setOnClickListener {
+           when(radioGroup.checkedRadioButtonId){
+               R.id.radio_blood->{
+                   requestType=bloodRadio.text.toString()
+               } R.id.radio_platelets->{
+                   requestType=plateletRadio.text.toString()
+               }
+               else ->{
+                   Toast.makeText(requireContext(), "Please select the request type", Toast.LENGTH_SHORT).show()
+                   return@setOnClickListener
+               }
+           }
+        }
+
+    }
+
+    private fun initView(view: View) {
+            radioGroup = view.findViewById(R.id.typeRadio)
+            bloodRadio = view.findViewById(R.id.radio_blood)
+            plateletRadio = view.findViewById(R.id.radio_platelets)
+            continueBtn = view.findViewById(R.id.continueBtn)
+
     }
 
     companion object {

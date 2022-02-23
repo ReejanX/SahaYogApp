@@ -2,10 +2,7 @@ package com.fyp.sahayogapp.api
 
 import com.fyp.sahayogapp.auth.model.RegisterUser
 import com.fyp.sahayogapp.auth.model.ResetPassword
-import com.fyp.sahayogapp.dashboard.model.APIResponse
-import com.fyp.sahayogapp.dashboard.model.ChangePassword
-import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
-import com.fyp.sahayogapp.dashboard.model.UserLogin
+import com.fyp.sahayogapp.dashboard.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -15,7 +12,7 @@ interface ApiInterface {
     fun getAllRequestList(): Call<List<DonationRequestModel>>
 
     @POST(API_URL.USER_LOGIN)
-    fun loginUser(@Body params: UserLogin): Call<APIResponse>
+    fun loginUser(@Body params: UserLogin): Call<LoginResponse>
 
     @POST(API_URL.USER_REGISTER)
     fun registerUser(@Body params: RegisterUser): Call<APIResponse>
@@ -34,6 +31,9 @@ interface ApiInterface {
         @Header("token")  basicToken: String,
         @Body params: ChangePassword): Call<APIResponse>
 
-
+    @GET(API_URL.DONOR_DETAILS)
+    fun getDonorDetails(
+        @Header("token")  basicToken: String,
+        @Query("id") userID: String): Call<DonorInfoResponse>
 
 }

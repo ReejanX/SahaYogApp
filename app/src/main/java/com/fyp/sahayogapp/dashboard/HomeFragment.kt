@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fyp.sahayogapp.R
 
 
@@ -46,6 +47,7 @@ class HomeFragment : Fragment() {
     lateinit var userListRecyclerView: RecyclerView
     lateinit var  requestListAdapter: RequestListAdapter
     lateinit var requestViewModel :RequestViewModel
+    lateinit var refresh:SwipeRefreshLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +72,7 @@ class HomeFragment : Fragment() {
 //        locationBtn = view.findViewById<Button>(R.id.locationBtn)
 //        locationTv = view.findViewById(R.id.locationTV)
         userListRecyclerView = view.findViewById(R.id.userListRecycler)
+        refresh = view.findViewById(R.id.refresh)
         requestListAdapter = RequestListAdapter()
 
 
@@ -87,7 +90,10 @@ class HomeFragment : Fragment() {
 //        locationBtn.setOnClickListener {
 //            fetchLocation()
 //        }
+        refresh.setOnRefreshListener {
+            initViewModel()
 
+        }
         var token = getAccessToken()
         var userID = getUserId()
         var userRole = getUserRole()
@@ -116,6 +122,7 @@ class HomeFragment : Fragment() {
             }else{
 
                 requestListAdapter.userList = it.toMutableList()
+                refresh.isRefreshing = false
                 requestListAdapter.notifyDataSetChanged()
 
             }
@@ -146,7 +153,7 @@ class HomeFragment : Fragment() {
 //               }
 //           }
 //        } else {
-//           Toast.makeText(requireContext(), "permission notgranted", Toast.LENGTH_SHORT).show()
+//           Toast.makeText(requireContext(), "permission not granted", Toast.LENGTH_SHORT).show()
 //            return
 //        }
 //

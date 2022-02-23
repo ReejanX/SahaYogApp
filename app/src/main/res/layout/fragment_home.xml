@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+
     tools:context=".dashboard.HomeFragment">
 
     <com.scwang.wave.MultiWaveHeader
         android:layout_width="match_parent"
         android:layout_height="80dp"
+
         app:layout_constraintTop_toTopOf="parent"
         app:mwhCloseColor="@color/primary"
         app:mwhStartColor="@color/primary"
@@ -27,16 +29,24 @@
             android:paddingLeft="16dp"
             android:paddingTop="8dp"
             android:layout_marginBottom="16dp"
-            android:text="Order List"
+            android:text="Request List"
             android:textColor="@color/white"
             android:textSize="32sp" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/userListRecycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            tools:listitem="@layout/order_card_layout" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="32dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userListRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="48dp"
+                tools:listitem="@layout/order_card_layout" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.fyp.sahayogapp.donation.DonationActivity
 import com.fyp.sahayogapp.permissions.PermissionLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,8 +37,10 @@ class DashActivity : AppCompatActivity() {
         navBar.setupWithNavController(navController!!)
 
         requestFloatingActionButton.setOnClickListener {
-            Toast.makeText(this, "open donation form page", Toast.LENGTH_SHORT).show()
-        }
+
+                val intent = Intent(this, DonationActivity::class.java)
+                startActivity(intent)
+            }
     }
 
 

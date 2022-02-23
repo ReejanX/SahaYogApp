@@ -1,6 +1,7 @@
 package com.fyp.sahayogapp.auth
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
@@ -9,13 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.donation.DonationActivity
 import com.fyp.sahayogapp.permissions.PermissionAlerts
 import com.fyp.sahayogapp.permissions.PermissionLocation
 import com.fyp.sahayogapp.permissions.SharedPreferences
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class AuthActivity : AppCompatActivity() {
+
+
     companion object {
         const val REMEMBER_PREF = "rememberMe"
         const val REMEMBER_KEY = "remember"
@@ -47,6 +52,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
         supportActionBar?.hide()
         PermissionLocation.checkLocationAccess(this,this)
+
 
     }
     override fun onRequestPermissionsResult(

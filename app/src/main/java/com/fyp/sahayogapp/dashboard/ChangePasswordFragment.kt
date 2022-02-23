@@ -182,7 +182,7 @@ class ChangePasswordFragment : Fragment() {
             if (it.code=="200"){
 
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                startActivity(Intent(requireContext(), AuthActivity::class.java))
+                Navigation.findNavController(backBtn).navigate(R.id.action_changePasswordFragment_to_nav_profile)
 
 
             }else{

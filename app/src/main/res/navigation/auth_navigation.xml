@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.fyp.sahayogapp.auth.LoginFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.fyp.sahayogapp.auth.SignUpFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/userTypeFragment"
-        android:name="com.fyp.sahayogapp.auth.UserTypeFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.UserTypeFragment"
         android:label="fragment_user_type"
         tools:layout="@layout/fragment_user_type" >
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/BBSignupFragment"
-        android:name="com.fyp.sahayogapp.auth.BBSignupFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.BBSignupFragment"
         android:label="fragment_bb_signup"
         tools:layout="@layout/fragment_bb_signup" >
         <action
@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.fyp.sahayogapp.auth.ForgotPasswordFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" >
         <action
@@ -96,12 +96,12 @@
     </fragment>
     <fragment
         android:id="@+id/passwordFragment"
-        android:name="com.fyp.sahayogapp.auth.PasswordFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.PasswordFragment"
         android:label="fragment_password"
         tools:layout="@layout/fragment_password" />
     <fragment
         android:id="@+id/OTPFragment"
-        android:name="com.fyp.sahayogapp.auth.OTPFragment"
+        android:name="com.fyp.sahayogapp.auth.frags.OTPFragment"
         android:label="fragment_o_t_p"
         tools:layout="@layout/fragment_o_t_p" >
         <action

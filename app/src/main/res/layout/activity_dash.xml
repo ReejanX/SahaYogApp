@@ -46,8 +46,7 @@
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
         android:backgroundTint="@color/primary"
-        android:src="@drawable/add"
-        app:borderWidth="0dp"
+        android:src="@drawable/ic_thopa"
         app:elevation="8dp"
         app:layout_anchor="@id/bottom_app_bar" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

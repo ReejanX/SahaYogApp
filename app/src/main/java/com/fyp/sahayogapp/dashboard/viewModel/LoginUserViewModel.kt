@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.fyp.sahayogapp.api.ApiInterface
 import com.fyp.sahayogapp.api.RetrofitClient
 import com.fyp.sahayogapp.dashboard.model.APIResponse
+import com.fyp.sahayogapp.dashboard.model.LoginResponse
 import com.fyp.sahayogapp.dashboard.model.UserLogin
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,13 +15,13 @@ import retrofit2.Response
 private const val TAG = "LoginUserViewModel"
 class LoginUserViewModel: ViewModel() {
 
-    lateinit var loginUser : MutableLiveData<APIResponse?>
+    lateinit var loginUser : MutableLiveData<LoginResponse?>
 
     init {
         loginUser= MutableLiveData()
     }
 
-    fun loginUserObservable() : MutableLiveData<APIResponse?> {
+    fun loginUserObservable() : MutableLiveData<LoginResponse?> {
 
         return  loginUser
     }
@@ -29,10 +30,10 @@ class LoginUserViewModel: ViewModel() {
 
         val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
         val call = retrofitInstance.loginUser(userLogin)
-        call.enqueue(object : Callback<APIResponse> {
+        call.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(
-                call: Call<APIResponse>,
-                response: Response<APIResponse>
+                call: Call<LoginResponse>,
+                response: Response<LoginResponse>
             ) {
 
                 if (response.isSuccessful){
@@ -41,7 +42,7 @@ class LoginUserViewModel: ViewModel() {
                 }
             }
 
-            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 Log.d(TAG, t.message.toString())
                 loginUser.postValue(null)
             }
