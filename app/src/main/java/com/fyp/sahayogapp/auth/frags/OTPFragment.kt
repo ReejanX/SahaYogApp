@@ -16,6 +16,7 @@ import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.auth.viewModel.ForgotPasswordViewModel
+import com.fyp.sahayogapp.base.BaseFragment
 import com.fyp.sahayogapp.dashboard.model.APIResponse
 
 
@@ -26,7 +27,7 @@ import com.fyp.sahayogapp.dashboard.model.APIResponse
  */
 
 private const val EMAIL = "EMAIL"
-class OTPFragment : Fragment() {
+class OTPFragment : BaseFragment() {
 
     private lateinit var pinView: PinView
     private lateinit var continueBtn : Button
@@ -52,6 +53,8 @@ class OTPFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         forgotPasswordViewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
+        checkOTPObservable()
+        sendOTPObservable()
         pinView = view.findViewById(R.id.pinView)
         continueBtn = view.findViewById(R.id.continueBtn)
         pinView.isFocused
@@ -67,31 +70,33 @@ class OTPFragment : Fragment() {
                 return@setOnClickListener
             }
             checkOTP()
-            checkOTPObservable()
+
 //            Toast.makeText(requireContext(), pinView.text, Toast.LENGTH_SHORT).show()
         }
 
         resendBtn.setOnClickListener {
             sendOTP()
-            sendOTPObservable()
+
         }
     }
 
     private fun sendOTP() {
+        showProgress()
         val email = ResetPassword(email,"","")
         forgotPasswordViewModel.sendOTP(email)
     }
     private fun sendOTPObservable() {
         forgotPasswordViewModel.sendOTPObservable().observe(requireActivity(), Observer <APIResponse?>{
             if (it == null){
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
-            }
+                dismissProgress()
+                showAlert("Failed","Server Request Error")            }
             if (it.code=="200"){
+                dismissProgress()
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }else{
-
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            }
+                dismissProgress()
+                showAlert("Failed",it.message)            }
         })
     }
 
@@ -103,15 +108,15 @@ class OTPFragment : Fragment() {
         forgotPasswordViewModel.otpCheckObservable().observe(requireActivity(), Observer <APIResponse?>{
             if (it==null){
 
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
-
+                showAlert("Failed","Server Request Error")
             }
             if(it.code == "200"){
+
 //                Toast.makeText(requireContext(), "OTP Verified", Toast.LENGTH_SHORT).show()
                 navigateToResetPassword()
             }
             else{
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                showAlert("Failed",it.message)
             }
         })
     }

@@ -39,6 +39,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.base.BaseFragment
 
 
 class HomeFragment : Fragment() {
@@ -101,7 +102,6 @@ class HomeFragment : Fragment() {
 
         initViewModel()
         initUserListRecycler()
-//        initViewModel()
     }
     fun initUserListRecycler (){
         userListRecyclerView.apply {
@@ -111,17 +111,18 @@ class HomeFragment : Fragment() {
     }
 
     fun initViewModel(){
-
+//    showProgress()
        requestViewModel= ViewModelProvider(this).get(RequestViewModel::class.java)
 
 
         requestViewModel.getDonationListObserver().observe(requireActivity(), Observer<List<DonationRequestModel>> {
             if (it==null){
-
-                Toast.makeText(requireContext(), "No results Found", Toast.LENGTH_SHORT).show()
+//                dismissProgress()
+//                showAlert("Sorry!","No results Found!")
             }else{
 
                 requestListAdapter.userList = it.toMutableList()
+//                dismissProgress()
                 refresh.isRefreshing = false
                 requestListAdapter.notifyDataSetChanged()
 

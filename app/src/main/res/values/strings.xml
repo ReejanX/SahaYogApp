@@ -12,10 +12,28 @@
         <item>O Positive</item>
         <item>O Negative</item>
     </string-array>
+    <string-array name="reasons">
+        <item>Accident</item>
+        <item>Surgery</item>
+        <item>Pregnancy</item>
+        <item>Cancer</item>
+        <item>Transplant</item>
+        <item>Thalassemia</item>
+        <item>Low Hemoglobin</item>
+        <item>Other</item>
+    </string-array>
     <string-array name="gender">
         <item>Male</item>
         <item>Female</item>
         <item>Other</item>
+
+    </string-array>
+    <string-array name="units">
+        <item>1 pint</item>
+        <item>2 pint</item>
+        <item>3 pint</item>
+        <item>4 pint</item>
+        <item>5 pint</item>
 
     </string-array>
     <string name="latoBold">lato_bold</string>

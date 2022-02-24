@@ -10,13 +10,14 @@ import com.fyp.sahayogapp.utils.Conts.KEY_USER_ROLE
 import com.fyp.sahayogapp.utils.Conts.PREF_NAME
 import com.fyp.sahayogapp.utils.Conts.WALKTHROUGH_SEEN
 
+lateinit var editor: SharedPreferences.Editor
+lateinit var pref: SharedPreferences
+
+
 object PreferenceHelper {
-    private lateinit var editor: SharedPreferences.Editor
-    private lateinit var pref: SharedPreferences
 
 
-
-    fun init(context: Context) {
+    fun initPref(context: Context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         editor = pref!!.edit()
     }
@@ -68,7 +69,7 @@ object PreferenceHelper {
     fun getUserRole() = pref.getString(KEY_USER_ROLE, null)
     fun getFcmTokenServerId() = pref.getString(KEY_FCM_TOKEN_SERVER_ID, null)
 
-    fun clear() {
+    fun clearPref() {
         editor.run {
             editor.clear()
         }.commit()

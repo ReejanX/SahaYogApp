@@ -1,6 +1,7 @@
 package com.fyp.sahayogapp.auth.frags
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.model.RegisterUser
 import com.fyp.sahayogapp.auth.viewModel.RegisterUserViewModel
@@ -23,6 +25,7 @@ import com.fyp.sahayogapp.dashboard.model.APIResponse
 import com.fyp.sahayogapp.auth.AuthActivity
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.auth.viewModel.ForgotPasswordViewModel
+import com.fyp.sahayogapp.base.BaseFragment
 
 
 private const val NAME = "NAME"
@@ -40,7 +43,7 @@ private const val LATITUDE = "LATITUDE"
 private const val LONGITUDE = "LONGITUDE"
 private const val RESETKEY = "RESETKEY"
 
-class PasswordFragment : Fragment() {
+class PasswordFragment : BaseFragment() {
 
     private lateinit var etPassword : EditText
     private lateinit var etPassword2 : EditText
@@ -109,11 +112,14 @@ class PasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView(view)
+
         if (resetKey == "001") {
             signUp.text="Reset Password"
         }
         registerUserViewModel = ViewModelProvider(this).get(RegisterUserViewModel::class.java)
         forgotPasswordViewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
+        resetPasswordObservable()
+        registerUserObservable()
         etPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -134,16 +140,15 @@ class PasswordFragment : Fragment() {
 
         signUp.setOnClickListener {
             if (isAtLeast8 && hasUppercase && hasNumber && hasSymbol && matches) {
-                Toast.makeText(requireContext(), "valid", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "valid", Toast.LENGTH_SHORT).show()
                 password = etPassword.text.toString()
 
                 if (resetKey == "001") {
 //                    Toast.makeText(requireContext(), resetKey+"password reset", Toast.LENGTH_SHORT).show()
                     resetPassword()
-                    resetPasswordObservable()
                 } else {
                     registerUser()
-                    registerUserObservable()
+
                 }
             }
             else{
@@ -167,7 +172,7 @@ class PasswordFragment : Fragment() {
     private fun resetPasswordObservable() {
          forgotPasswordViewModel.resetPasswordObservable().observe(requireActivity(), Observer <APIResponse?>{
             if (it == null){
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+                showAlert("Failed","Server Request Error")
             }
             if (it.code=="200"){
 
@@ -176,7 +181,7 @@ class PasswordFragment : Fragment() {
 
 
             }else{
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                showAlert("Failed",it.message)
             }
         })
 
@@ -193,7 +198,7 @@ class PasswordFragment : Fragment() {
     private fun registerUserObservable() {
         registerUserViewModel.registerUserObservable().observe(requireActivity(), Observer <APIResponse?>{
             if (it == null){
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+                showAlert("Failed","Server Request Error")
             }
             if (it.code=="200"){
 
@@ -202,7 +207,7 @@ class PasswordFragment : Fragment() {
 
 
             }else{
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                showAlert("Failed",it.message)
             }
         })
     }

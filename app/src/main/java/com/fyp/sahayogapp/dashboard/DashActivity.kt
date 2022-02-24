@@ -14,13 +14,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.fyp.sahayogapp.base.BaseActivity
 import com.fyp.sahayogapp.donation.DonationActivity
 import com.fyp.sahayogapp.permissions.PermissionLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
-class DashActivity : AppCompatActivity() {
+class DashActivity : BaseActivity() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var backPressedTime: Long = 0;
     lateinit var navBar: BottomNavigationView

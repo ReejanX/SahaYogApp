@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.sahayogapp.R
@@ -15,19 +14,19 @@ import com.fyp.sahayogapp.auth.AuthActivity.Companion.REMEMBER_KEY
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.REMEMBER_PREF
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.hideKeyboard
 import com.fyp.sahayogapp.auth.AuthActivity.Companion.nav
+import com.fyp.sahayogapp.base.BaseFragment
 import com.fyp.sahayogapp.dashboard.DashActivity
-import com.fyp.sahayogapp.dashboard.model.APIResponse
 import com.fyp.sahayogapp.dashboard.model.LoginResponse
 import com.fyp.sahayogapp.dashboard.model.UserLogin
 import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
 import com.fyp.sahayogapp.permissions.PermissionLocation
-import com.fyp.sahayogapp.utils.PreferenceHelper.init
+import com.fyp.sahayogapp.utils.PreferenceHelper.initPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveAccessToken
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveUserId
 import java.util.*
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
     private lateinit var root: LinearLayout
     private lateinit var scroll: LinearLayout
     private lateinit var signUpBtn: Button
@@ -63,6 +62,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
         loginUserViewModel= ViewModelProvider(this).get(LoginUserViewModel::class.java)
+        loginUserObservable()
         PermissionLocation.checkLocationAccess(requireActivity(),requireContext())
         root.setOnClickListener {
             it.hideKeyboard(requireContext())
@@ -96,21 +96,24 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUserObservable() {
-        loginUserViewModel.loginUserObservable().observe(requireActivity(),Observer <LoginResponse?>{
+        loginUserViewModel.loginUserObservable().observe(viewLifecycleOwner,Observer <LoginResponse>{
             if (it == null){
-                Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                dismissProgress()
+                showAlert("Sorry!","Server Request Failed!")
                 return@Observer
             }
             if (it.code=="200"){
-
+                dismissProgress()
                 startActivity(Intent(requireContext(), DashActivity::class.java))
-                init(requireActivity())
+                initPref(requireActivity())
                 saveAccessToken(it.data.token)
                 saveUserId(it.data.user_id, it.data.user_role)
+                return@Observer
 //                Toast.makeText(context, it.data.user_name, Toast.LENGTH_SHORT).show()
             }else{
+                dismissProgress()
+                showAlert("Sorry!",it.message)
 
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -164,9 +167,9 @@ class LoginFragment : Fragment() {
             password.error = "Enter Password"
             return
         }
-        loginUser()
-        loginUserObservable()
 
+
+        loginUser()
 
 //        if (email.text.toString().lowercase(Locale.getDefault())
 //            == "reejan" || password.text.toString() == "reejan"
@@ -189,6 +192,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser() {
+        showProgress()
         val userLogin = UserLogin(email.text.toString(),password.text.toString())
 
         loginUserViewModel.loginUser(userLogin)

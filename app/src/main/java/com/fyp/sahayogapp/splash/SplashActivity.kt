@@ -12,6 +12,7 @@ import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity
 import com.fyp.sahayogapp.onBoarding.OnBoardingActivity
 import com.fyp.sahayogapp.permissions.PermissionLocation
+import com.fyp.sahayogapp.utils.PreferenceHelper.initPref
 
 
 class SplashActivity : AppCompatActivity() {
@@ -19,6 +20,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         supportActionBar?.hide()
+        initPref(applicationContext)
         if (!onBoardingFinished()) {
 
 

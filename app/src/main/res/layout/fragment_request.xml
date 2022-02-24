@@ -118,6 +118,8 @@
                         android:layout_marginTop="8dp"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:hintTextColor="@color/blue"
+                        app:boxStrokeColor="@color/blue"
+
                         app:layout_constraintTop_toBottomOf="@id/bloodGroupTV">
 
                         <AutoCompleteTextView
@@ -149,6 +151,7 @@
                         android:layout_marginTop="8dp"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:hintTextColor="@color/blue"
+                        app:boxStrokeColor="@color/blue"
                         app:layout_constraintTop_toBottomOf="@id/unitsTV">
 
                         <AutoCompleteTextView
@@ -198,6 +201,8 @@
                         android:layout_marginHorizontal="16dp"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:hintTextColor="@color/blue"
+                        app:boxStrokeColor="@color/blue"
+
                         app:layout_constraintTop_toBottomOf="@id/patientTv">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -230,6 +235,7 @@
                         android:layout_marginTop="8dp"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:hintTextColor="@color/blue"
+                        app:boxStrokeColor="@color/blue"
                         app:layout_constraintTop_toBottomOf="@id/reasonTv">
 
                         <AutoCompleteTextView
@@ -279,6 +285,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
+                        app:boxStrokeColor="@color/blue"
                         app:boxBackgroundColor="@android:color/transparent"
                         app:hintTextColor="@color/blue"
                         app:layout_constraintTop_toBottomOf="@id/hospitalTv">
@@ -300,7 +307,7 @@
                         android:drawableEnd="@drawable/location"
                         android:drawableTint="@color/blue"
                         android:text="Set on Map"
-                        android:textColor="@color/black"
+                        android:textColor="@color/blue"
                         app:layout_constraintEnd_toEndOf="@id/hospitalET"
                         app:layout_constraintTop_toBottomOf="@id/hospitalET" />
 
@@ -324,6 +331,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         app:hintTextColor="@color/blue"
+                        app:boxStrokeColor="@color/blue"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/message">
 

@@ -51,6 +51,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21240942028985507" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="1.0" />
+        <entry key="app/src/main/res/layout/base_layout.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/custom_confirm_address.xml" value="0.33500546939915404" />
         <entry key="app/src/main/res/layout/donation_detail_layout.xml" value="0.335" />
         <entry key="app/src/main/res/layout/dropdown_layout.xml" value="0.2942708333333333" />

@@ -9,31 +9,35 @@ import retrofit2.http.*
 
 interface ApiInterface {
     @GET(API_URL.GET_DONATION_LIST)
-    fun getAllRequestList(): Call<List<DonationRequestModel>>
+    suspend fun getAllRequestList(): List<DonationRequestModel>
 
     @POST(API_URL.USER_LOGIN)
-    fun loginUser(@Body params: UserLogin): Call<LoginResponse>
+    suspend fun loginUser(@Body params: UserLogin): LoginResponse
 
     @POST(API_URL.USER_REGISTER)
-    fun registerUser(@Body params: RegisterUser): Call<APIResponse>
+    suspend fun registerUser(@Body params: RegisterUser): APIResponse
 
     @POST(API_URL.SEND_OTP)
-    fun sendOTP(@Body params: ResetPassword): Call<APIResponse>
+    suspend fun sendOTP(@Body params: ResetPassword): APIResponse
 
     @POST(API_URL.OTP_VERIFY)
-    fun checkOTP(@Body params: ResetPassword) :Call<APIResponse>
+    suspend fun checkOTP(@Body params: ResetPassword) :APIResponse
 
     @PUT(API_URL.RESET_PASSWORD)
-    fun resetPassword(@Body params: ResetPassword): Call<APIResponse>
+    suspend fun resetPassword(@Body params: ResetPassword): APIResponse
 
     @PUT(API_URL.CHANGE_PASSWORD)
-    fun changePassword(
-        @Header("token")  basicToken: String,
-        @Body params: ChangePassword): Call<APIResponse>
+    suspend fun changePassword(
+        @Body params: ChangePassword): APIResponse
 
     @GET(API_URL.DONOR_DETAILS)
-    fun getDonorDetails(
-        @Header("token")  basicToken: String,
-        @Query("id") userID: String): Call<DonorInfoResponse>
+    suspend fun getDonorDetails(
+        @Query("id") userID: String): DonorInfoResponse
+
+//    @POST(API_URL.POST_REQUEST)
+//    suspend fun postDonationRequest(
+//        @h
+//    )
+
 
 }

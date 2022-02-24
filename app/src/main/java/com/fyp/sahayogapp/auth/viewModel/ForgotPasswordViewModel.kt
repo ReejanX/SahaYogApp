@@ -1,12 +1,17 @@
 package com.fyp.sahayogapp.auth.viewModel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fyp.sahayogapp.api.ApiInterface
 import com.fyp.sahayogapp.api.RetrofitClient
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.dashboard.model.APIResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,33 +22,18 @@ class ForgotPasswordViewModel : ViewModel() {
 
     var sendOTP: MutableLiveData<APIResponse?> = MutableLiveData()
 
-    fun sendOTPObservable(): MutableLiveData<APIResponse?> {
+    fun sendOTPObservable(): LiveData<APIResponse?> {
 
         return sendOTP
     }
 
     fun sendOTP(email: ResetPassword) {
-
-        val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
-        val call = retrofitInstance.sendOTP(email)
-        call.enqueue(object : Callback<APIResponse> {
-            override fun onResponse(
-                call: Call<APIResponse>,
-                response: Response<APIResponse>
-            ) {
-
-                if (response.isSuccessful) {
-
-                    sendOTP.postValue(response.body())
-                }
-            }
-
-            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
-                Log.d(TAG, t.message.toString())
-                sendOTP.postValue(null)
-            }
-
-        })
+        viewModelScope.launch(IO) {
+            val retrofitInstance =
+                RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.sendOTP(email)
+            sendOTP.postValue(call)
+        }
     }
 
     var resetPasswordResponse: MutableLiveData<APIResponse?> = MutableLiveData()
@@ -55,48 +45,29 @@ class ForgotPasswordViewModel : ViewModel() {
 
     fun resetPassword(resetPassword: ResetPassword) {
 
-        val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
-        val call = retrofitInstance.resetPassword(resetPassword)
-        call.enqueue(object : Callback<APIResponse> {
-            override fun onResponse(
-                call: Call<APIResponse>,
-                response: Response<APIResponse>
-            ) {
 
-                if (response.isSuccessful) {
-                    resetPasswordResponse.postValue(response.body())
-                }
-            }
-
-            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
-                Log.d(TAG, t.message.toString())
-                resetPasswordResponse.postValue(null)
-            }
-
-        })
+        viewModelScope.launch(IO) {
+            val retrofitInstance =
+                RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.resetPassword(resetPassword)
+            resetPasswordResponse.postValue(call)
+        }
     }
 
-    var otpCheckResponse :MutableLiveData<APIResponse?> = MutableLiveData()
-    fun otpCheckObservable() : MutableLiveData<APIResponse?> {
+    var otpCheckResponse: MutableLiveData<APIResponse?> = MutableLiveData()
+    fun otpCheckObservable(): MutableLiveData<APIResponse?> {
         return otpCheckResponse
     }
 
-    fun checkOTP(email: ResetPassword){
-        val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
-        val call = retrofitInstance.checkOTP(email)
-        call.enqueue(object :Callback<APIResponse>{
-            override fun onResponse(call: Call<APIResponse>, response: Response<APIResponse>) {
-               if (response.isSuccessful){
+    fun checkOTP(email: ResetPassword) {
+        viewModelScope.launch(IO) {
+            val retrofitInstance =
+                RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.checkOTP(email)
+            otpCheckResponse.postValue(call)
+        }
 
-                   otpCheckResponse.postValue(response.body())
-               }
-            }
 
-            override fun onFailure(call: Call<APIResponse>, t: Throwable) {
-                Log.d(TAG, t.message.toString())
-                otpCheckResponse.postValue(null)
-            }
-        })
     }
 
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.base.BaseActivity
 import com.fyp.sahayogapp.donation.DonationActivity
 import com.fyp.sahayogapp.permissions.PermissionAlerts
 import com.fyp.sahayogapp.permissions.PermissionLocation
@@ -18,7 +19,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : BaseActivity() {
 
 
     companion object {
@@ -73,7 +74,7 @@ class AuthActivity : AppCompatActivity() {
                             permission!!
                         )
                         if (showRationale) {
-                            PermissionAlerts.showAlert(
+                            PermissionAlerts.showPAlert(
                                 this,
                                 this,
                                 LOC_MESSAGE,

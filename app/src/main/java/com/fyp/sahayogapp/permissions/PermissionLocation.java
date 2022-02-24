@@ -34,7 +34,7 @@ public class PermissionLocation {
 
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                         Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    PermissionAlerts.showAlert(myContext, activity, LOC_MESSAGE, MY_PERMISSIONS_REQUEST_LOCATION);
+                    PermissionAlerts.showPAlert(myContext, activity, LOC_MESSAGE, MY_PERMISSIONS_REQUEST_LOCATION);
                 } else {
                     ActivityCompat.requestPermissions(activity,
                             new String[]{Manifest.permission.ACCESS_FINE_LOCATION},

@@ -3,9 +3,12 @@ package com.fyp.sahayogapp.dashboard.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fyp.sahayogapp.api.ApiInterface
 import com.fyp.sahayogapp.api.RetrofitClient
 import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,25 +29,13 @@ class RequestViewModel : ViewModel(){
 
     fun getDonationList(){
 
-        val retrofitInstance =RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
-        val call = retrofitInstance.getAllRequestList()
-        call.enqueue(object : Callback<List<DonationRequestModel>>{
-            override fun onResponse(
-                call: Call<List<DonationRequestModel>>,
-                response: Response<List<DonationRequestModel>>
-            ) {
-                if (response.isSuccessful){
+        viewModelScope.launch(IO){
+            val retrofitInstance =
+                RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.getAllRequestList()
+            recylerlistData.postValue(call)
 
-                    recylerlistData.postValue(response.body())
-                }
-            }
-
-            override fun onFailure(call: Call<List<DonationRequestModel>>, t: Throwable) {
-                Log.d(TAG, t.message.toString())
-               recylerlistData.postValue(null)
-            }
-
-        })
+        }
     }
 }
 

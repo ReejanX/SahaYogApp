@@ -42,7 +42,7 @@ public class PermissionAlerts {
         alertDialog.show();
     }
 
-    public static void showAlert(Context context, Activity activity, String message, int requestCode) {
+    public static void showPAlert(Context context, Activity activity, String message, int requestCode) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Alert");
         alertDialog.setMessage(message);

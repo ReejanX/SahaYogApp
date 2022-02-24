@@ -109,14 +109,5 @@ class SignUpFragment : Fragment() {
 
     }
 
-//    private fun nav(view: View, id: Int) {
-//        Navigation.findNavController(view).navigate(id)
-//    }
-
-//    fun View.hideKeyboard() {
-//        val inputMethodManager =
-//            requireContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-//        inputMethodManager?.hideSoftInputFromWindow(this.windowToken, 0)
-//    }
 
 }
