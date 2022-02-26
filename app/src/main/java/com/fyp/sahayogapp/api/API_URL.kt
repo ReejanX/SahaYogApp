@@ -12,5 +12,6 @@ object API_URL {
     const val CHANGE_PASSWORD = "profile/change-password"
     const val DONOR_DETAILS = "user/getDonorDetails"
     const val POST_REQUEST = "donor/post-donation-request"
+    const val GET_VENUE = "donor/get-venues"
 
 }

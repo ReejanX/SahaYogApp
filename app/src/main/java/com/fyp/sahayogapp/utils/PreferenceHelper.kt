@@ -6,6 +6,7 @@ import com.fyp.sahayogapp.utils.Conts.KEY_ACCESS_TOKEN
 import com.fyp.sahayogapp.utils.Conts.KEY_FCM_TOKEN
 import com.fyp.sahayogapp.utils.Conts.KEY_FCM_TOKEN_SERVER_ID
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_ID
+import com.fyp.sahayogapp.utils.Conts.KEY_USER_NAME
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_ROLE
 import com.fyp.sahayogapp.utils.Conts.PREF_NAME
 import com.fyp.sahayogapp.utils.Conts.WALKTHROUGH_SEEN

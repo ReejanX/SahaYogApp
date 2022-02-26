@@ -28,6 +28,8 @@ data class LoginResponse(
     val data: LoginData
 )
 
+
+
 data class DonorInfoResponse(
     val success : String,
     val code : String,
@@ -53,5 +55,17 @@ data class DonorData(
      val sex: String,
      val last_donated: String
 
+)
+
+
+data class  VenueData(
+   val venue_id : String,
+    val venue_name: String,
+val venue_contact: String,
+val work_day : String,
+val open_time : String,
+val close_time : String,
+val latitude : String,
+val longitude : String
 )
 

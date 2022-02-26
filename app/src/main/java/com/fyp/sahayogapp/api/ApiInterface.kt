@@ -3,7 +3,6 @@ package com.fyp.sahayogapp.api
 import com.fyp.sahayogapp.auth.model.RegisterUser
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.dashboard.model.*
-import retrofit2.Call
 import retrofit2.http.*
 
 
@@ -27,17 +26,16 @@ interface ApiInterface {
     suspend fun resetPassword(@Body params: ResetPassword): APIResponse
 
     @PUT(API_URL.CHANGE_PASSWORD)
-    suspend fun changePassword(
-        @Body params: ChangePassword): APIResponse
+    suspend fun changePassword(@Body params: ChangePassword): APIResponse
 
     @GET(API_URL.DONOR_DETAILS)
-    suspend fun getDonorDetails(
-        @Query("id") userID: String): DonorInfoResponse
+    suspend fun getDonorDetails(@Query("id") userID: String): DonorInfoResponse
 
-//    @POST(API_URL.POST_REQUEST)
-//    suspend fun postDonationRequest(
-//        @h
-//    )
+    @GET(API_URL.GET_VENUE)
+    suspend fun getVenues(): List<VenueData>
+
+    @POST(API_URL.POST_REQUEST)
+    suspend fun postDonationRequest(@Body params: DonationRequestModel): APIResponse
 
 
 }
