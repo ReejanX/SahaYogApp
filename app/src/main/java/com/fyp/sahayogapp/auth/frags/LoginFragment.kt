@@ -63,19 +63,14 @@ class LoginFragment : BaseFragment() {
         initView(view)
         loginUserViewModel= ViewModelProvider(this).get(LoginUserViewModel::class.java)
         loginUserObservable()
-        PermissionLocation.checkLocationAccess(requireActivity(),requireContext())
-        root.setOnClickListener {
-            it.hideKeyboard(requireContext())
-        }
-        scroll.setOnClickListener {
-            it.hideKeyboard(requireContext())
-        }
+
         signUpBtn.setOnClickListener {
             nav(signUpBtn, R.id.action_loginFragment_to_userTypeFragment)
         }
         loginBtn.setOnClickListener {
 
-            validate()
+//            validate()
+            startActivity(Intent(requireContext(), DashActivity::class.java))
         }
         if (getFromPref(REMEMBER_KEY, REMEMBER_PREF) == true){
             startActivity(Intent(requireContext(), DashActivity::class.java))
@@ -83,15 +78,15 @@ class LoginFragment : BaseFragment() {
         forgot.setOnClickListener {
             nav(view,R.id.action_loginFragment_to_forgotPasswordFragment)
         }
-//        checkBox.setOnCheckedChangeListener { compoundButton, b ->
-//            if (compoundButton.isChecked) {
-//                rememberChecked()
-//
-//            } else if (!compoundButton.isChecked) {
-//                rememberUnChecked()
-//            }
-//
-//        }
+        checkBox.setOnCheckedChangeListener { compoundButton, b ->
+            if (compoundButton.isChecked) {
+                rememberChecked()
+
+            } else if (!compoundButton.isChecked) {
+                rememberUnChecked()
+            }
+
+        }
 
     }
 
@@ -158,7 +153,6 @@ class LoginFragment : BaseFragment() {
 //    }
 
     private fun validate() {
-        PermissionLocation.checkLocationAccess(requireActivity(),requireContext())
         if (email.text.isNullOrEmpty()) {
             email.error = "Enter Email Address"
             return

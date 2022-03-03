@@ -52,48 +52,48 @@ class AuthActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
         supportActionBar?.hide()
-        PermissionLocation.checkLocationAccess(this,this)
+//        PermissionLocation.checkLocationAccess(this,this)
 
 
     }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            MY_PERMISSIONS_REQUEST_LOCATION -> {
-                var i = 0
-                val len = permissions.size
-                while (i < len) {
-                    val permission = permissions[i]
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(
-                            this,
-                            permission!!
-                        )
-                        if (showRationale) {
-                            PermissionAlerts.showPAlert(
-                                this,
-                                this,
-                                LOC_MESSAGE,
-                                MY_PERMISSIONS_REQUEST_LOCATION
-                            )
-                        } else if (!showRationale) {
-                            SharedPreferences.saveToPreferences(
-                                this,
-                                ALLOW_KEY,
-                                true,
-                                LOCATION_PREF
-                            )
-                        }
-                    }
-                    i++
-                }
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<String?>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        when (requestCode) {
+//            MY_PERMISSIONS_REQUEST_LOCATION -> {
+//                var i = 0
+//                val len = permissions.size
+//                while (i < len) {
+//                    val permission = permissions[i]
+//                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+//                        val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+//                            this,
+//                            permission!!
+//                        )
+//                        if (showRationale) {
+//                            PermissionAlerts.showPAlert(
+//                                this,
+//                                this,
+//                                LOC_MESSAGE,
+//                                MY_PERMISSIONS_REQUEST_LOCATION
+//                            )
+//                        } else if (!showRationale) {
+//                            SharedPreferences.saveToPreferences(
+//                                this,
+//                                ALLOW_KEY,
+//                                true,
+//                                LOCATION_PREF
+//                            )
+//                        }
+//                    }
+//                    i++
+//                }
+//            }
+//        }
+//    }
 
 
 

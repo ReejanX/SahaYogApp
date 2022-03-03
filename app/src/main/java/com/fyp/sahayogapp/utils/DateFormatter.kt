@@ -17,6 +17,15 @@ object DateFormatter {
         return formatter2.format(newDate)
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun convertToDBDate(date: String): String {
+        val formatter: DateFormat = SimpleDateFormat("EEE MMM dd hh:mm:ss 'GMT'Z yyyy")
+        val formatter2: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val newDate: Date = formatter.parse(date)
+        return formatter2.format(newDate)
+    }
+
+
     fun getDateParsed(date: String?, pattern: String?): String? {
         val dateFormat = SimpleDateFormat(pattern)
         var d: Date? = null

@@ -2,7 +2,6 @@
     <!-- Base application theme. -->
     <style name="Theme.SahayogApp" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
-        
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary</item>

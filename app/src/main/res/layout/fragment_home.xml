@@ -37,13 +37,16 @@
             android:id="@+id/refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp">
+            android:layout_marginTop="32dp"
+            >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userListRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="48dp"
+                android:layout_height="match_parent"
+                android:paddingBottom="48dp"
+                android:clipToPadding="false"
+                android:scrollbarStyle="outsideOverlay"
                 tools:listitem="@layout/order_card_layout" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

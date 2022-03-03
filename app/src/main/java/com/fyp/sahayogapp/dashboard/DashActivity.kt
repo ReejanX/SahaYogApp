@@ -33,10 +33,9 @@ class DashActivity : BaseActivity() {
         supportActionBar?.hide()
         navBar = findViewById(R.id.bottom_navigation_view)
         requestFloatingActionButton = findViewById(R.id.fab)
-        PermissionLocation.checkLocationAccess(this,this)
         navController = findNavController(R.id.dashboard_host_fragment)
         navBar.setupWithNavController(navController!!)
-
+        navBar.menu.findItem(R.id.add).isEnabled=false
         requestFloatingActionButton.setOnClickListener {
 
                 val intent = Intent(this, DonationActivity::class.java)

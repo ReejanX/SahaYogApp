@@ -17,12 +17,14 @@ import com.fyp.sahayogapp.utils.DateFormatter.convertDate
 import android.content.Intent
 import android.net.Uri
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.utils.DateFormatter.getDateParsed
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,12 +48,14 @@ class DonationDetailFragment : Fragment() {
     private lateinit var requiredAmount:CustomTextView
     private lateinit var patientName:CustomTextView
     private lateinit var venueName:CustomTextView
+    private lateinit var requestDate:CustomTextView
     private lateinit var dateTill: CustomTextView
     private lateinit var address: CustomTextView
     private lateinit var openTime: CustomTextView
     private lateinit var closeTime: CustomTextView
     private lateinit var backbtn: ImageButton
     private lateinit var apointmentBtn : ImageButton
+    private lateinit var message : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,8 +81,10 @@ class DonationDetailFragment : Fragment() {
             Navigation.findNavController(backbtn).navigate(R.id.action_donationDetailFragment_to_nav_home)
         }
         call.setOnClickListener {
+
+
             val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse("tel:1234567890")
+            callIntent.data = Uri.parse("tel:${data?.user_phone}")
             startActivity(callIntent)
         }
         apointmentBtn.setOnClickListener {
@@ -118,15 +124,25 @@ class DonationDetailFragment : Fragment() {
         venueName = view.findViewById(R.id.hospitalName)
         requiredAmount = view.findViewById(R.id.totalUnitTV)
         dateTill = view.findViewById(R.id.validTV)
+        requestDate = view.findViewById(R.id.issuedTV)
         address = view.findViewById(R.id.addressTV)
         openTime = view.findViewById(R.id.openTV)
         closeTime= view.findViewById(R.id.closeTv)
-
+        message = view.findViewById(R.id.messageTV)
         backbtn = view.findViewById(R.id.backBtn)
         call = view.findViewById(R.id.callBtn)
         apointmentBtn = view.findViewById(R.id.appointment)
         remainingUnitTV.text = data?.remaining_unit
         bloodGroup.text = data?.blood_group
+
+        if(data?.message==null ||data?.message==""){
+            message.visibility = View.GONE
+
+        }
+        else{
+            message.visibility= View.VISIBLE
+            message.text = data?.message
+        }
         if (data?.donation_status =="false"){
             donationStatus.text = "In Progress"
         }else{
@@ -138,20 +154,21 @@ class DonationDetailFragment : Fragment() {
         venueName.text = data?.venue_name
         patientName.text = data?.patient_name
         dateTill.text = convertDate(data?.date_till.toString())
+        requestDate.text = convertDate(data?.request_date.toString())
         requiredAmount.text ="Total Units\n"+data?.required_amount
-//        val addressText = getAddress(data?.latitude!!.toDouble(), data?.longitude!!.toDouble() )
-//        address.text = addressText
-        address.text = data?.latitude + data?.longitude
+        val addressText = getAddress(data?.latitude!!.toDouble(), data?.longitude!!.toDouble() )
+//        address.text = data?.latitude + data?.longitude
+        address.text = addressText
         openTime.text = data?.open_time
         closeTime.text = data?.close_time
     }
 
 
-//    fun getAddress(lat: Double, lng: Double): String {
-//        val geocoder = Geocoder(context)
-//        val list = geocoder.getFromLocation(lat, lng, 1)
-//        return list[0].getAddressLine(0)
-//    }
+    fun getAddress(lat: Double, lng: Double): String {
+        val geocoder = Geocoder(context)
+        val list = geocoder.getFromLocation(lat, lng, 1)
+        return list[0].getAddressLine(0)
+    }
 
 //    companion object {
 //        /**

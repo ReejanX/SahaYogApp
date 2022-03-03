@@ -37,7 +37,6 @@ class UserTypeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
-        PermissionLocation.checkLocationAccess(requireActivity(),requireContext())
         donorCard.setOnClickListener {
             donorCard.isChecked = true
             bBankCard.isChecked = false

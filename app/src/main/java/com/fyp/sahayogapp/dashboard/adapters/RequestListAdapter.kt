@@ -68,6 +68,7 @@ class RequestListAdapter: RecyclerView.Adapter<RequestListAdapter.MyViewHolder>(
         val venue_name: TextView = view.findViewById(R.id.venue_name)
         val donateBtn: TextView = view.findViewById(R.id.donateBtn)
         val remaining :TextView = view.findViewById(R.id.remainingUnitTV)
+        val message :TextView = view.findViewById(R.id.messageTV )
         init {
             donateBtn.setOnClickListener{
                 listener.goToDetails(adapterPosition)
@@ -83,9 +84,17 @@ class RequestListAdapter: RecyclerView.Adapter<RequestListAdapter.MyViewHolder>(
             patientName.text = data.patient_name
             unitsRequired.text = data.required_amount
             requestType.text = data.donation_type
-            requiredDate.text = DateFormatter.convertDate(data.date_till)
+            requiredDate.text = DateFormatter.convertDate(data.date_till.toString())
             venue_name.text = data.venue_name
             remaining.text =  "( Remaining ${data.remaining_unit} )"
+            if(data?.message==null ||data?.message==""){
+                message.visibility = View.GONE
+
+            }
+            else{
+                message.visibility= View.VISIBLE
+                message.text = data.message
+            }
         }
     }
 

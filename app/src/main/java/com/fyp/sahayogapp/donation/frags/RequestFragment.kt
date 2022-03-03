@@ -1,6 +1,7 @@
 package com.fyp.sahayogapp.donation.frags
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import com.fyp.sahayogapp.dashboard.model.APIResponse
 import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
 import com.fyp.sahayogapp.dashboard.model.VenueData
 import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
+import com.fyp.sahayogapp.utils.Conts
 import com.fyp.sahayogapp.utils.DateFormatter
+import com.fyp.sahayogapp.utils.DateFormatter.convertToDBDate
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserId
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
 import com.google.android.material.datepicker.CalendarConstraints
@@ -50,9 +53,16 @@ class RequestFragment : BaseFragment() {
     private lateinit var message: EditText
     private lateinit var patientName: EditText
     private lateinit var date: EditText
+    private lateinit var addVenue: TextView
     var venueList = mutableListOf<VenueData>()
-    var days = 0
-    var venueID = ""
+    var dbDate = ""
+    var venueID : String? = null
+    var venueName = ""
+    var venueContact = ""
+    var workStart = ""
+    var workEnd = ""
+    var latitude = ""
+    var longitude = ""
     val userID = getUserId()
     val userRole = getUserRole()
     private lateinit var requestViewModel: RequestViewModel
@@ -73,7 +83,7 @@ class RequestFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_request, container, false)
@@ -128,18 +138,37 @@ class RequestFragment : BaseFragment() {
             datePicker.show(parentFragmentManager, "")
             datePicker.addOnPositiveButtonClickListener {
                 val appointmentDate = it?.let { it1 -> Date(it1) }
+
                 val dateString = DateFormatter.getDateParsed(
                     appointmentDate.toString(),
                     "EEE MMM dd hh:mm:ss 'GMT'Z yyyy"
                 )!!
-                val diff = it - MaterialDatePicker.todayInUtcMilliseconds()
-                  days= TimeUnit.MILLISECONDS.toDays(diff).toInt();
+                dbDate = convertToDBDate(appointmentDate.toString())
+                Log.i("TAG", "onViewCreated: "+dbDate)
 
+                date.setText(dateString)
 
-                Toast.makeText(context, days.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
+        addVenue.setOnClickListener {
+            var addVenueDialog = AddVenueDialogFragment()
+            addVenueDialog.show(parentFragmentManager, "addVenue")
+            addVenueDialog.setListener(object : AddVenueDialogFragment.OnInputListener {
+                override fun sendInput(venueInfo: VenueData?) {
+                    Log.i("TAG", "sendInput: " + venueInfo)
+                    venueName = venueInfo!!.venue_name
+                    venueContact = venueInfo.venue_contact
+                    workStart = venueInfo.open_time
+                    workEnd = venueInfo.close_time
+                     latitude = venueInfo.latitude
+                    longitude = venueInfo.longitude
+
+                    venueDD.setText(venueName)
+                }
+
+            })
+        }
 
         continueBtn.setOnClickListener {
             when (radioGroup.checkedRadioButtonId) {
@@ -158,10 +187,28 @@ class RequestFragment : BaseFragment() {
                     return@setOnClickListener
                 }
 
+
             }
+
             postRequest()
+
         }
 
+
+    }
+
+    private fun postRequest() {
+        if (userRole == Conts.DONOR) {
+            postDonorRequest()
+        }
+        if (userRole == Conts.HOSPITAL) {
+            postHospitalRequest()
+        }
+
+    }
+
+
+    private fun postHospitalRequest() {
 
     }
 
@@ -199,6 +246,7 @@ class RequestFragment : BaseFragment() {
         message = view.findViewById(R.id.messageET)
         patientName = view.findViewById(R.id.patientNameET)
         date = view.findViewById(R.id.requiredDate)
+        addVenue = view.findViewById(R.id.addVenue)
 
 
     }
@@ -218,7 +266,7 @@ class RequestFragment : BaseFragment() {
 
     }
 
-    private fun postRequest() {
+    private fun postDonorRequest() {
 
         var postDonation = DonationRequestModel(
             null,
@@ -232,15 +280,16 @@ class RequestFragment : BaseFragment() {
             pints.text.toString().substring(0, 1),
             null,
             message.text.toString(),
-            days.toString(),
+            null,
+            dbDate,
             patientName.text.toString(),
             venueID,
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
+            latitude,
+            longitude,
+            venueContact,
+            venueName,
+            workStart,
+            workEnd
         )
 
         requestViewModel.postDonation(postDonation)
@@ -265,4 +314,5 @@ class RequestFragment : BaseFragment() {
                 }
             }
     }
+
 }

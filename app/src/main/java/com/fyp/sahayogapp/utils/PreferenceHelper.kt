@@ -64,7 +64,7 @@ object PreferenceHelper {
     }
 
 
-    fun getAccessToken() = pref.getString(KEY_ACCESS_TOKEN, null)
+    fun getAccessToken() = pref.getString(KEY_ACCESS_TOKEN, "token")
     fun getFcmToken() = pref.getString(KEY_FCM_TOKEN, null)
     fun getUserId() = pref.getString(KEY_USER_ID, null)
     fun getUserRole() = pref.getString(KEY_USER_ROLE, null)
