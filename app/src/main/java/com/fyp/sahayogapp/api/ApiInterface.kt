@@ -31,11 +31,16 @@ interface ApiInterface {
     @GET(API_URL.DONOR_DETAILS)
     suspend fun getDonorDetails(@Query("id") userID: String): DonorInfoResponse
 
+    @GET(API_URL.HOSPITAL_DETAILS)
+    suspend fun getHospitalDetails(@Query("id") userID: String): HospitalInfoResponse
+
     @GET(API_URL.GET_VENUE)
     suspend fun getVenues(): List<VenueData>
 
     @POST(API_URL.POST_REQUEST)
     suspend fun postDonationRequest(@Body params: DonationRequestModel): APIResponse
 
+    @POST(API_URL.ACCEPT_REQUEST)
+    suspend fun acceptDonationRequest(@Body params:AcceptDonation): APIResponse
 
 }

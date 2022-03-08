@@ -37,13 +37,29 @@ data class DonorInfoResponse(
     val data: DonorData
 )
 
+data class HospitalInfoResponse(
+    val success : String,
+    val code : String,
+    val message : String,
+    val data: HospitalData
+)
+
+data class AcceptDonation(
+    val donation_id:String,
+    val donor_id:String,
+    val trasfussion_date:String?,
+    val extra_1: String?,
+    val extra_2: String?
+
+)
 
 data class LoginData(
      val token : String,
      val user_id: String,
      val user_name : String,
      val user_email: String,
-     val user_role: String
+     val user_role: String,
+     val type_id:String
 
 )
 
@@ -55,6 +71,16 @@ data class DonorData(
      val sex: String,
      val last_donated: String
 
+)
+data class HospitalData(
+    val email: String,
+    val name: String,
+    val phone: String,
+    val contact:String?,
+    val open_time: String,
+    val close_time: String,
+    val latitude: String,
+    val longitude: String
 )
 
 

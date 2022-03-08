@@ -19,8 +19,19 @@ import android.net.Uri
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.Navigation
+import com.fyp.sahayogapp.base.BaseFragment
+import com.fyp.sahayogapp.dashboard.model.APIResponse
+import com.fyp.sahayogapp.dashboard.model.AcceptDonation
+import com.fyp.sahayogapp.dashboard.model.HospitalInfoResponse
+import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
+import com.fyp.sahayogapp.utils.Conts.DONOR
+import com.fyp.sahayogapp.utils.Conts.HOSPITAL
 import com.fyp.sahayogapp.utils.DateFormatter.getDateParsed
+import com.fyp.sahayogapp.utils.PreferenceHelper.getRoleID
+import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -34,7 +45,7 @@ import java.util.*
  * Use the [DonationDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DonationDetailFragment : Fragment() {
+class DonationDetailFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var data: DonationRequestModel? = null
 
@@ -56,8 +67,10 @@ class DonationDetailFragment : Fragment() {
     private lateinit var backbtn: ImageButton
     private lateinit var apointmentBtn : ImageButton
     private lateinit var message : TextView
-
-
+    private lateinit var requestViewModel: RequestViewModel
+    private lateinit var donateBtn : Button
+    private val userRole = getUserRole()
+    private val typeID = getRoleID()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -75,8 +88,9 @@ class DonationDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requestViewModel = ViewModelProvider(this).get(RequestViewModel::class.java)
         initView(view)
+        acceptDonationObserver()
         backbtn.setOnClickListener {
             Navigation.findNavController(backbtn).navigate(R.id.action_donationDetailFragment_to_nav_home)
         }
@@ -86,6 +100,14 @@ class DonationDetailFragment : Fragment() {
             val callIntent = Intent(Intent.ACTION_CALL)
             callIntent.data = Uri.parse("tel:${data?.user_phone}")
             startActivity(callIntent)
+        }
+        donateBtn.setOnClickListener { 
+            if (userRole!= DONOR){
+                showAlert("Unauthorized","Only User who are donor can accept a Request")
+                return@setOnClickListener
+            }
+
+            acceptDonation()
         }
         apointmentBtn.setOnClickListener {
 
@@ -131,6 +153,7 @@ class DonationDetailFragment : Fragment() {
         message = view.findViewById(R.id.messageTV)
         backbtn = view.findViewById(R.id.backBtn)
         call = view.findViewById(R.id.callBtn)
+        donateBtn = view.findViewById(R.id.donate)
         apointmentBtn = view.findViewById(R.id.appointment)
         remainingUnitTV.text = data?.remaining_unit
         bloodGroup.text = data?.blood_group
@@ -168,6 +191,32 @@ class DonationDetailFragment : Fragment() {
         val geocoder = Geocoder(context)
         val list = geocoder.getFromLocation(lat, lng, 1)
         return list[0].getAddressLine(0)
+    }
+
+   private fun acceptDonation(){
+       showProgress()
+        val acceptDonation = AcceptDonation(data?.donation_id.toString(),typeID.toString(),"","","" )
+        
+        requestViewModel.acceptRequest(acceptDonation)
+    }
+    
+   private fun acceptDonationObserver(){
+       requestViewModel.acceptDonationObserver().observe(viewLifecycleOwner,{
+           if (it==null){
+               dismissProgress()
+               showAlert("Sorry","Server Request Error!!")
+               
+           }
+           if (it?.code=="200"){
+               
+               dismissProgress()
+               showAlert("Success",it.message)
+           }
+           else{
+               dismissProgress()
+               showAlert("Failed",it?.message)
+           }
+       })
     }
 
 //    companion object {

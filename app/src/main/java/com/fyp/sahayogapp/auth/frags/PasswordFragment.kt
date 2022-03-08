@@ -1,7 +1,6 @@
 package com.fyp.sahayogapp.auth.frags
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -14,10 +13,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.model.RegisterUser
 import com.fyp.sahayogapp.auth.viewModel.RegisterUserViewModel
@@ -26,22 +23,9 @@ import com.fyp.sahayogapp.auth.AuthActivity
 import com.fyp.sahayogapp.auth.model.ResetPassword
 import com.fyp.sahayogapp.auth.viewModel.ForgotPasswordViewModel
 import com.fyp.sahayogapp.base.BaseFragment
+import com.fyp.sahayogapp.utils.Conts
+import com.google.firebase.iid.FirebaseInstanceId
 
-
-private const val NAME = "NAME"
-private const val EMAIL = "EMAIL"
-private const val BLOODGROUP = "BLOODGROUP"
-private const val GENDER = "GENDER"
-private const val PHONENUMBER = "PHONENUMBER"
-private const val USERTYPE = "USERTYPE"
-private const val REGISTRATION = "REGISTRATION"
-private const val LANDLINE = "LANDLINE"
-private const val WORKDAY = "WORKDAY"
-private const val OPENTIME = "OPENTIME"
-private const val CLOSETIME = "CLOSETIME"
-private const val LATITUDE = "LATITUDE"
-private const val LONGITUDE = "LONGITUDE"
-private const val RESETKEY = "RESETKEY"
 
 class PasswordFragment : BaseFragment() {
 
@@ -78,24 +62,25 @@ class PasswordFragment : BaseFragment() {
     private var latitude=""
     private var longitude=""
     private var resetKey=""
+    private val token = FirebaseInstanceId.getInstance().token
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let{
-            name = it.getString(NAME,"")
-            email = it.getString(EMAIL,"")
-            phoneNumber = it.getString(PHONENUMBER,"")
-            gender = it.getString(GENDER,"")
-            userType = it.getString(USERTYPE,"")
-            bloodGroup = it.getString(BLOODGROUP,"")
-            registration_number = it.getString(REGISTRATION,"")
-            landline_number = it.getString(LANDLINE,"")
-            work_day = it.getString(WORKDAY,"")
-            open_time = it.getString(OPENTIME,"")
-            close_time = it.getString(CLOSETIME,"")
-            latitude = it.getString(LATITUDE,"")
-            longitude = it.getString(LONGITUDE,"")
-            resetKey = it.getString(RESETKEY,"")
+            name = it.getString(Conts.NAME,"")
+            email = it.getString(Conts.EMAIL,"")
+            phoneNumber = it.getString(Conts.PHONENUMBER,"")
+            gender = it.getString(Conts.GENDER,"")
+            userType = it.getString(Conts.USERTYPE,"")
+            bloodGroup = it.getString(Conts.BLOODGROUP,"")
+            registration_number = it.getString(Conts.REGISTRATION,"")
+            landline_number = it.getString(Conts.LANDLINE,"")
+            work_day = it.getString(Conts.WORKDAY,"")
+            open_time = it.getString(Conts.OPENTIME,"")
+            close_time = it.getString(Conts.CLOSETIME,"")
+            latitude = it.getString(Conts.LATITUDE,"")
+            longitude = it.getString(Conts.LONGITUDE,"")
+            resetKey = it.getString(Conts.RESETKEY,"")
 
         }
     }
@@ -190,7 +175,7 @@ class PasswordFragment : BaseFragment() {
 
 
     private fun registerUser() {
-        val registerUser = RegisterUser(name,email,password,phoneNumber,userType,gender,bloodGroup,registration_number,landline_number,work_day,open_time,close_time,latitude,longitude)
+        val registerUser = RegisterUser(name,email,password,phoneNumber,userType,gender,bloodGroup,registration_number,landline_number,work_day,open_time,close_time,latitude,longitude,token)
 
         registerUserViewModel.registerUser(registerUser)
     }

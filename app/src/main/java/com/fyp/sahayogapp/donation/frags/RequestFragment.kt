@@ -258,6 +258,7 @@ class RequestFragment : BaseFragment() {
             }
             if (it.code == "200") {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                activity?.finish()
             } else {
                 showAlert("Sorry", it.message)
             }

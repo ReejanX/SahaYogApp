@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "330903701912",
+    "project_id": "sahayogapp-3fd9e",
+    "storage_bucket": "sahayogapp-3fd9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330903701912:android:2249113438733d0e81c3ed",
+        "android_client_info": {
+          "package_name": "com.fyp.sahayogapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330903701912-pcc99u1gfh6gloicjjfmhh2mttrn2dff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fyp.sahayogapp",
+            "certificate_hash": "076590016ad67c8ee093a7eb9ba9889c0dd26219"
+          }
+        },
+        {
+          "client_id": "330903701912-a5e6h8ngcmclc9hbmhjga3eo52ad7ot7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK8IEcObSj_sD7JCrD0FkvlvvHgjqLiyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330903701912-a5e6h8ngcmclc9hbmhjga3eo52ad7ot7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

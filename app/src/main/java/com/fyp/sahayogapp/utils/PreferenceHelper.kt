@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.fyp.sahayogapp.utils.Conts.KEY_ACCESS_TOKEN
 import com.fyp.sahayogapp.utils.Conts.KEY_FCM_TOKEN
 import com.fyp.sahayogapp.utils.Conts.KEY_FCM_TOKEN_SERVER_ID
+import com.fyp.sahayogapp.utils.Conts.KEY_ROLE_ID
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_ID
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_NAME
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_ROLE
@@ -46,11 +47,12 @@ object PreferenceHelper {
         }
     }
 
-    fun saveUserId(userId: String, userRole: String) {
+    fun saveUserId(userId: String, userRole: String,typeID:String) {
         val p: SharedPreferences.Editor = pref.edit()
         with(p) {
-            putString(KEY_USER_ID, "$userId")
-            putString(KEY_USER_ROLE, "$userRole")
+            putString(KEY_USER_ID, userId)
+            putString(KEY_USER_ROLE, userRole)
+            putString(KEY_ROLE_ID, typeID)
             commit()
         }
     }
@@ -68,6 +70,7 @@ object PreferenceHelper {
     fun getFcmToken() = pref.getString(KEY_FCM_TOKEN, null)
     fun getUserId() = pref.getString(KEY_USER_ID, null)
     fun getUserRole() = pref.getString(KEY_USER_ROLE, null)
+    fun getRoleID() = pref.getString(KEY_ROLE_ID, null)
     fun getFcmTokenServerId() = pref.getString(KEY_FCM_TOKEN_SERVER_ID, null)
 
     fun clearPref() {

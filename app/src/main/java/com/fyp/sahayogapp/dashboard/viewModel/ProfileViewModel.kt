@@ -20,10 +20,12 @@ class ProfileViewModel: ViewModel() {
 
     lateinit var changePasswordLD: MutableLiveData<APIResponse?>
     lateinit var donorDetailsList: MutableLiveData<DonorInfoResponse?>
+    lateinit var hospitalDetailsList: MutableLiveData<HospitalInfoResponse?>
 
     init {
         changePasswordLD = MutableLiveData()
         donorDetailsList = MutableLiveData()
+        hospitalDetailsList = MutableLiveData()
     }
 
     fun passwordChangeObservable(): MutableLiveData<APIResponse?> {
@@ -34,6 +36,11 @@ class ProfileViewModel: ViewModel() {
     fun donorDetailObservable(): MutableLiveData<DonorInfoResponse?> {
 
         return donorDetailsList
+    }
+
+    fun hospitalDetailObservable(): MutableLiveData<HospitalInfoResponse?> {
+
+        return hospitalDetailsList
     }
 
     fun changePassword(changePassword: ChangePassword) {
@@ -54,6 +61,17 @@ class ProfileViewModel: ViewModel() {
             val call = retrofitInstance.getDonorDetails( userID)
 
             donorDetailsList.postValue(call)
+        }
+    }
+
+    fun getHospitalDetails( userID: String) {
+
+        viewModelScope.launch(IO) {
+            val retrofitInstance =
+                RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.getHospitalDetails( userID)
+
+            hospitalDetailsList.postValue(call)
         }
     }
 }

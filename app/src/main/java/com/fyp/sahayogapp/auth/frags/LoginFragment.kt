@@ -3,6 +3,7 @@ package com.fyp.sahayogapp.auth.frags
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,10 @@ import com.fyp.sahayogapp.utils.PreferenceHelper.initPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveAccessToken
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveUserId
 import java.util.*
+import com.google.firebase.iid.FirebaseInstanceId
+
+
+
 
 
 class LoginFragment : BaseFragment() {
@@ -45,7 +50,7 @@ class LoginFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
 
@@ -69,8 +74,8 @@ class LoginFragment : BaseFragment() {
         }
         loginBtn.setOnClickListener {
 
-//            validate()
-            startActivity(Intent(requireContext(), DashActivity::class.java))
+            validate()
+//            startActivity(Intent(requireContext(), DashActivity::class.java))
         }
         if (getFromPref(REMEMBER_KEY, REMEMBER_PREF) == true){
             startActivity(Intent(requireContext(), DashActivity::class.java))
@@ -102,7 +107,7 @@ class LoginFragment : BaseFragment() {
                 startActivity(Intent(requireContext(), DashActivity::class.java))
                 initPref(requireActivity())
                 saveAccessToken(it.data.token)
-                saveUserId(it.data.user_id, it.data.user_role)
+                saveUserId(it.data.user_id, it.data.user_role,it.data.type_id)
                 return@Observer
 //                Toast.makeText(context, it.data.user_name, Toast.LENGTH_SHORT).show()
             }else{

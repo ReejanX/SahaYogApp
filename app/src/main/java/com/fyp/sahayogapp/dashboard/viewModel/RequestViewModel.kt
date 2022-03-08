@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.fyp.sahayogapp.api.ApiInterface
 import com.fyp.sahayogapp.api.RetrofitClient
 import com.fyp.sahayogapp.dashboard.model.APIResponse
+import com.fyp.sahayogapp.dashboard.model.AcceptDonation
 import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
 import com.fyp.sahayogapp.dashboard.model.VenueData
 import kotlinx.coroutines.Dispatchers.IO
@@ -77,6 +78,26 @@ class RequestViewModel : ViewModel(){
         viewModelScope.launch(IO) {
             val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
             val call = retrofitInstance.postDonationRequest(donationRequest)
+            donationPost.postValue(call)
+        }
+    }
+
+    lateinit var acceptDonation: MutableLiveData<APIResponse?>
+
+    init {
+        acceptDonation= MutableLiveData()
+    }
+
+    fun acceptDonationObserver(): MutableLiveData<APIResponse?>{
+
+        return acceptDonation
+    }
+
+    fun acceptRequest(donationRequest :AcceptDonation){
+
+        viewModelScope.launch(IO) {
+            val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.acceptDonationRequest(donationRequest)
             donationPost.postValue(call)
         }
     }
