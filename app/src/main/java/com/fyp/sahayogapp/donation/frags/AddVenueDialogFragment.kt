@@ -3,18 +3,24 @@ package com.fyp.sahayogapp.donation.frags
 import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.auth.AuthActivity
 import com.fyp.sahayogapp.dashboard.model.VenueData
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -23,7 +29,7 @@ import java.util.*
 import com.fyp.sahayogapp.donation.frags.AddVenueDialogFragment.OnInputListener
 
 
-
+private const val LOCATION_REQUEST = 101
 
 class AddVenueDialogFragment : DialogFragment() {
     private lateinit var venueName:EditText
@@ -80,7 +86,7 @@ class AddVenueDialogFragment : DialogFragment() {
             dialog?.dismiss()
         }
         getLocation.setOnClickListener{
-            fetchLocation()
+            requestLocationPermission()
         }
         done.setOnClickListener {
 
@@ -100,6 +106,24 @@ class AddVenueDialogFragment : DialogFragment() {
             dialog?.dismiss()
         }
 
+
+
+    }
+    private fun requestLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            fetchLocation()
+        } else {
+
+
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_REQUEST)
+
+        }
 
 
     }
@@ -138,6 +162,44 @@ class AddVenueDialogFragment : DialogFragment() {
             return addresses[0].getAddressLine(0)
         }
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLocation()
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                    ActivityCompat.requestPermissions(requireActivity()!!,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        AuthActivity.MY_PERMISSIONS_REQUEST_LOCATION)
+                } else {
+
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Permission Required")
+                        .setMessage( "This app requires access to Location Service to proceed. Would you like to open setting and grant permission?", )
+                        .setNegativeButton("Cancel",null)
+                        .setPositiveButton("Open Settings",                         DialogInterface.OnClickListener { dialog, which ->
+                            startActivityForResult(Intent().apply {
+                                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                data = Uri.fromParts(
+                                    "package",
+                                    requireActivity().packageName,
+                                    null
+                                )
+                            }, LOCATION_REQUEST)
+                        })
+                        .show()
+
+                }
+
+            }
+        }
+    }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

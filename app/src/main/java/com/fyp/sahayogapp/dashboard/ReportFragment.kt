@@ -5,7 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.fyp.sahayogapp.R
+import com.fyp.sahayogapp.base.BaseFragment
+import com.fyp.sahayogapp.dashboard.model.DonationRequestResponse
+import com.fyp.sahayogapp.dashboard.viewModel.MyActivityViewModel
+import com.fyp.sahayogapp.utils.Conts.DONOR
+import com.fyp.sahayogapp.utils.Conts.HOSPITAL
+import com.fyp.sahayogapp.utils.PreferenceHelper
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,10 +27,18 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ReportFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ReportFragment : Fragment() {
+class ReportFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var acceptCard : CardView
+    private lateinit var requestsAccepted : TextView
+
+    private lateinit var  myActivityViewModel: MyActivityViewModel
+
+    val role = PreferenceHelper.getUserRole()
+    val role_id = PreferenceHelper.getRoleID()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +54,46 @@ class ReportFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_report, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        myActivityViewModel = ViewModelProvider(this).get(MyActivityViewModel::class.java)
+        getMyDoantionsAcceptedObserver()
+        initView(view)
+
+        if (role == HOSPITAL){
+
+            acceptCard.visibility = View.GONE
+        }
+        if (role == DONOR ){
+
+            getMyDoantionsAccepted(role_id)
+        }
+    }
+
+    private fun getMyDoantionsAcceptedObserver() {
+        myActivityViewModel.getAcceptedRequestObserver().observe(requireActivity(),Observer<DonationRequestResponse>{
+
+            if (it==null){
+                showAlert("Sorry","Server Request failed")
+            }
+            if (it.code=="200"){
+                requestsAccepted.text = it.data.size.toString()
+            }
+
+        })
+    }
+
+    private fun getMyDoantionsAccepted(roleId: String?) {
+
+        myActivityViewModel.getAcceptedRequest(roleId!!)
+
+    }
+
+    private fun initView(view: View) {
+        acceptCard = view.findViewById(R.id.card2)
+        requestsAccepted = view.findViewById(R.id.accepted)
     }
 
     companion object {

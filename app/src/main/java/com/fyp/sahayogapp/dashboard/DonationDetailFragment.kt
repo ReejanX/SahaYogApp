@@ -214,7 +214,7 @@ class DonationDetailFragment : BaseFragment() {
            }
            else{
                dismissProgress()
-               showAlert("Failed",it?.message)
+               showAlert("Sorry",it?.message)
            }
        })
     }

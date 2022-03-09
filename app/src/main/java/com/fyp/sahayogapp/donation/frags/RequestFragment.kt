@@ -24,7 +24,6 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
@@ -189,11 +188,42 @@ class RequestFragment : BaseFragment() {
 
 
             }
+            validate()
 
-            postRequest()
 
         }
 
+
+    }
+
+    private fun validate() {
+        if (bloodGroup.text.isNullOrEmpty()) {
+            bloodGroup.setError("Required")
+            return
+        }
+
+        if (pints.text.isNullOrEmpty()) {
+            pints.setError("Required")
+            return
+        }
+        if (date.text.isNullOrEmpty()) {
+            date.setError("Required")
+            return
+        }
+        if (patientName.text.isNullOrEmpty()) {
+            patientName.setError("Required")
+            return
+        }
+        if (reason.text.isNullOrEmpty()) {
+            reason.setError("Required")
+            return
+        }
+        if (venueDD.text.isNullOrEmpty()) {
+            venueDD.setError("Required")
+            return
+        }
+
+        postRequest()
 
     }
 
@@ -290,7 +320,8 @@ class RequestFragment : BaseFragment() {
             venueContact,
             venueName,
             workStart,
-            workEnd
+            workEnd,
+            null
         )
 
         requestViewModel.postDonation(postDonation)

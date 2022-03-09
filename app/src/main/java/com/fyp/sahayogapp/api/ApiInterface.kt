@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface ApiInterface {
     @GET(API_URL.GET_DONATION_LIST)
-    suspend fun getAllRequestList(): List<DonationRequestModel>
+    suspend fun getAllRequestList(): DonationRequestResponse
 
     @POST(API_URL.USER_LOGIN)
     suspend fun loginUser(@Body params: UserLogin): LoginResponse
@@ -42,5 +42,9 @@ interface ApiInterface {
 
     @POST(API_URL.ACCEPT_REQUEST)
     suspend fun acceptDonationRequest(@Body params:AcceptDonation): APIResponse
+
+    @GET(API_URL.GET_MY_ACCEPTED_DONATIONS)
+    suspend fun  getMyAcceptedDonations(@Query("id")donorID: String): DonationRequestResponse
+
 
 }

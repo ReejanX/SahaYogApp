@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.ActionOnlyNavDirections
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity
@@ -22,6 +20,7 @@ import com.fyp.sahayogapp.dashboard.model.HospitalInfoResponse
 import com.fyp.sahayogapp.dashboard.viewModel.ProfileViewModel
 import com.fyp.sahayogapp.utils.Conts.DONOR
 import com.fyp.sahayogapp.utils.Conts.HOSPITAL
+import com.fyp.sahayogapp.utils.PreferenceHelper.clearAutoLoginPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.clearPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserId
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
@@ -31,22 +30,24 @@ class ProfileFragment : BaseFragment() {
     private var param1: String? = null
     private var param2: String? = null
     var last = ""
-    private lateinit var changePassword:TextView
-    private lateinit var logout:TextView
-    private lateinit var bloodGroup : TextView
-    private lateinit var lastdonated : TextView
-    private lateinit var phone : TextView
-    private lateinit var sex : TextView
-    private lateinit var email : TextView
-    private lateinit var name : TextView
-    private lateinit var contact : TextView
-    private lateinit var startTime : TextView
-    private lateinit var closeTime : TextView
-    private lateinit var address : TextView
-    private lateinit var userCard :CardView
-    private lateinit var donorLayout : LinearLayout
-    private lateinit var hospitalLayout : LinearLayout
-    private lateinit var profileViewModel:ProfileViewModel
+    private lateinit var changePassword: TextView
+    private lateinit var logout: TextView
+    private lateinit var bloodGroup: TextView
+    private lateinit var lastdonated: TextView
+    private lateinit var phone: TextView
+    private lateinit var sex: TextView
+    private lateinit var email: TextView
+    private lateinit var name: TextView
+    private lateinit var contact: TextView
+    private lateinit var startTime: TextView
+    private lateinit var closeTime: TextView
+    private lateinit var address: TextView
+    private lateinit var livesSaved: TextView
+    private lateinit var userCard: CardView
+    private lateinit var livesSavedCard : CardView
+    private lateinit var donorLayout: LinearLayout
+    private lateinit var hospitalLayout: LinearLayout
+    private lateinit var profileViewModel: ProfileViewModel
 
     val role = getUserRole()
     val user_id = getUserId()
@@ -81,8 +82,8 @@ class ProfileFragment : BaseFragment() {
                 DialogInterface.OnClickListener { dialog, which ->
 
                     clearPref()
+                    clearAutoLoginPref(requireContext())
                     startActivity(Intent(requireContext(), AuthActivity::class.java))
-                    Toast.makeText(requireContext(), "Implement Logout", Toast.LENGTH_SHORT).show()
                 })
         }
         getDonorDetailsObservable()
@@ -92,9 +93,8 @@ class ProfileFragment : BaseFragment() {
         if (role == DONOR) {
             getDonorDetails()
         }else if (role == HOSPITAL){
-
+            livesSavedCard.visibility=View.GONE
             getHospitalDetails()
-
         }
     }
 
@@ -107,6 +107,7 @@ class ProfileFragment : BaseFragment() {
         phone = view.findViewById(R.id.phoneNumber)
         sex = view.findViewById(R.id.sex)
         name = view.findViewById(R.id.userNameTv)
+        livesSavedCard = view.findViewById(R.id.card)
         email = view.findViewById(R.id.userEmailTv)
         donorLayout = view.findViewById(R.id.donorInfo)
         hospitalLayout = view.findViewById(R.id.hospitalInfo)
@@ -114,6 +115,7 @@ class ProfileFragment : BaseFragment() {
         startTime = view.findViewById(R.id.openTime)
         closeTime = view.findViewById(R.id.closeTime)
         address = view.findViewById(R.id.addressH)
+        livesSaved = view.findViewById(R.id.liveSaved)
         profileViewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
     }
@@ -144,6 +146,7 @@ class ProfileFragment : BaseFragment() {
                 phone.text=it.data.phone
                 email.text=it.data.email
                 name.text = it.data.name
+                livesSaved.text = it.data.livesSaved
                 if (it.data.last_donated==null) {
                 last = "Unknown"
                 }else{

@@ -2,6 +2,7 @@ package com.fyp.sahayogapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.fyp.sahayogapp.auth.AuthActivity
 import com.fyp.sahayogapp.utils.Conts.KEY_ACCESS_TOKEN
 import com.fyp.sahayogapp.utils.Conts.KEY_FCM_TOKEN
 import com.fyp.sahayogapp.utils.Conts.KEY_FCM_TOKEN_SERVER_ID
@@ -30,6 +31,13 @@ object PreferenceHelper {
             putString(KEY_ACCESS_TOKEN, "$token")
             commit()
         }
+    }
+    fun clearAutoLoginPref(context: Context) {
+        var preferance = context.getSharedPreferences(AuthActivity.REMEMBER_PREF, Context.MODE_PRIVATE)
+        editor = preferance.edit()
+        editor.run {
+            editor.clear()
+        }.commit()
     }
     fun saveFcmTokenServerId(token: String) {
         val p: SharedPreferences.Editor = pref.edit()

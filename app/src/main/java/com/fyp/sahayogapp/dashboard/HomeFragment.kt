@@ -24,12 +24,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity
+import com.fyp.sahayogapp.auth.frags.LoginFragment
 import com.fyp.sahayogapp.base.BaseFragment
 import com.fyp.sahayogapp.custom.CustomTextView
 import com.fyp.sahayogapp.dashboard.adapters.RequestListAdapter
 import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
+import com.fyp.sahayogapp.dashboard.model.DonationRequestResponse
 import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
 import com.fyp.sahayogapp.utils.Conts.DONATION_DATA
+import com.fyp.sahayogapp.utils.PreferenceHelper.clearAutoLoginPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.getAccessToken
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserId
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
@@ -142,16 +145,25 @@ class HomeFragment : BaseFragment() {
 
 
         requestViewModel.getDonationListObserver()
-            .observe(requireActivity(), Observer<List<DonationRequestModel>> {
+            .observe(requireActivity(), Observer<DonationRequestResponse> {
                 if (it == null) {
 //                dismissProgress()
 //                showAlert("Sorry!","No results Found!")
                 } else {
-
-                    requestListAdapter.userList = it.toMutableList()
+                    if (it.code == "200") {
+                        requestListAdapter.userList = it.data.toMutableList()
 //                dismissProgress()
-                    refresh.isRefreshing = false
-                    requestListAdapter.notifyDataSetChanged()
+                        refresh.isRefreshing = false
+                        requestListAdapter.notifyDataSetChanged()
+                    }
+                    else if (it.code == "401"){
+
+                        showAlert("Failed",it.message)
+                        clearAutoLoginPref(requireContext())
+                        startActivity(Intent(requireContext(),AuthActivity::class.java))
+
+                    }
+
 
                 }
             })

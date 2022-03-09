@@ -2,6 +2,14 @@ package com.fyp.sahayogapp.dashboard.model
 
 import java.io.Serializable
 
+data class DonationRequestResponse(
+    val success : String,
+    val code : String,
+    val message : String,
+    val data: List<DonationRequestModel>
+
+)
+
 data class DonationRequestModel(
     val donation_id: String?,
     val blood_group: String,
@@ -24,6 +32,7 @@ data class DonationRequestModel(
     val venue_name: String?,
     val open_time: String?,
     val close_time: String?,
+    val transfussion_date:String?
 
     ) : Serializable
 

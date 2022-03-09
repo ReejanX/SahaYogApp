@@ -15,5 +15,6 @@ object API_URL {
     const val POST_REQUEST = "donor/post-donation-request"
     const val ACCEPT_REQUEST = "donor/accept-donation-request"
     const val GET_VENUE = "donor/get-venues"
+    const val GET_MY_ACCEPTED_DONATIONS = "donor/my-accepted-history"
 
 }

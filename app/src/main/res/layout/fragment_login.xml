@@ -107,6 +107,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
+                    android:gravity="end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -114,19 +115,12 @@
                     android:layout_marginEnd="24dp"
                     android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/checkbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:buttonTint="@color/blue"
-                        android:text="Keep me logged in" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/forgotBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:fontFamily="@font/lato_bold"
                         android:text="Forgot password?"

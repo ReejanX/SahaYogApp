@@ -21,9 +21,12 @@ import com.fyp.sahayogapp.dashboard.model.LoginResponse
 import com.fyp.sahayogapp.dashboard.model.UserLogin
 import com.fyp.sahayogapp.dashboard.viewModel.LoginUserViewModel
 import com.fyp.sahayogapp.permissions.PermissionLocation
+import com.fyp.sahayogapp.utils.Conts
 import com.fyp.sahayogapp.utils.PreferenceHelper.initPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveAccessToken
 import com.fyp.sahayogapp.utils.PreferenceHelper.saveUserId
+import com.fyp.sahayogapp.utils.editor
+import com.fyp.sahayogapp.utils.pref
 import java.util.*
 import com.google.firebase.iid.FirebaseInstanceId
 
@@ -36,7 +39,6 @@ class LoginFragment : BaseFragment() {
     private lateinit var scroll: LinearLayout
     private lateinit var signUpBtn: Button
     private lateinit var loginBtn: Button
-    private lateinit var checkBox: CheckBox
     private lateinit var email: EditText
     private lateinit var password: EditText
     private lateinit var forgot: Button
@@ -83,15 +85,11 @@ class LoginFragment : BaseFragment() {
         forgot.setOnClickListener {
             nav(view,R.id.action_loginFragment_to_forgotPasswordFragment)
         }
-        checkBox.setOnCheckedChangeListener { compoundButton, b ->
-            if (compoundButton.isChecked) {
-                rememberChecked()
 
-            } else if (!compoundButton.isChecked) {
-                rememberUnChecked()
-            }
 
-        }
+
+
+
 
     }
 
@@ -104,6 +102,7 @@ class LoginFragment : BaseFragment() {
             }
             if (it.code=="200"){
                 dismissProgress()
+                rememberChecked()
                 startActivity(Intent(requireContext(), DashActivity::class.java))
                 initPref(requireActivity())
                 saveAccessToken(it.data.token)
@@ -118,16 +117,10 @@ class LoginFragment : BaseFragment() {
         })
     }
 
-    //updating sharedPreferences when unchecked keep me logged in
-    private fun rememberUnChecked() {
-        val sharedPreferences =
-            requireContext().getSharedPreferences(REMEMBER_PREF, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(REMEMBER_KEY, false)
-        editor.apply()
-    }
-    //updating sharedPreferences when checked keep me logged in
-    private fun rememberChecked() {
+    //updating sharedPreferences to keep the user logged in
+
+
+    fun rememberChecked() {
         val sharedPreferences =
             requireContext().getSharedPreferences(REMEMBER_PREF, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -135,7 +128,7 @@ class LoginFragment : BaseFragment() {
         editor.apply()
     }
     //reading sharedPreferences File
-    private fun getFromPref( key: String?, pref: String?): Boolean? {
+   fun getFromPref( key: String?, pref: String?): Boolean? {
         val myPrefs = requireContext().getSharedPreferences(pref, Context.MODE_PRIVATE)
         return myPrefs.getBoolean(key, false)
     }
@@ -146,7 +139,6 @@ class LoginFragment : BaseFragment() {
         signUpBtn = view.findViewById(R.id.signUpBtn)
         email = view.findViewById(R.id.email)
         password = view.findViewById(R.id.password)
-        checkBox = view.findViewById(R.id.checkbox)
         loginBtn = view.findViewById(R.id.login)
         forgot = view.findViewById(R.id.forgotBtn)
     }

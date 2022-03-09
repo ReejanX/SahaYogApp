@@ -69,7 +69,8 @@ data class DonorData(
      val phone: String,
      val blood_group: String,
      val sex: String,
-     val last_donated: String
+     val last_donated: String,
+     val livesSaved : String
 
 )
 data class HospitalData(
