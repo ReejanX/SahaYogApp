@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.base.BaseFragment
+import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
 import com.fyp.sahayogapp.dashboard.model.DonationRequestResponse
 import com.fyp.sahayogapp.dashboard.viewModel.MyActivityViewModel
 import com.fyp.sahayogapp.utils.Conts.DONOR
@@ -34,11 +35,17 @@ class ReportFragment : BaseFragment() {
 
     private lateinit var acceptCard : CardView
     private lateinit var requestsAccepted : TextView
+    private lateinit var myRequests : TextView
 
     private lateinit var  myActivityViewModel: MyActivityViewModel
-
+    var myRequestList = listOf<DonationRequestModel>()
+    var myAcceptedRequestsList = listOf<DonationRequestModel>()
     val role = PreferenceHelper.getUserRole()
     val role_id = PreferenceHelper.getRoleID()
+    val user_id = PreferenceHelper.getUserId()
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +66,9 @@ class ReportFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         myActivityViewModel = ViewModelProvider(this).get(MyActivityViewModel::class.java)
-        getMyDoantionsAcceptedObserver()
+        getMyDonationsAcceptedObserver()
+        getMyRequestsObserver()
+        getMyRequests(user_id)
         initView(view)
 
         if (role == HOSPITAL){
@@ -68,32 +77,56 @@ class ReportFragment : BaseFragment() {
         }
         if (role == DONOR ){
 
-            getMyDoantionsAccepted(role_id)
+            getMyDonationsAccepted(role_id)
         }
     }
 
-    private fun getMyDoantionsAcceptedObserver() {
+    private fun getMyRequestsObserver() {
+        myActivityViewModel.getMyRequestsObserver().observe(requireActivity(),Observer<DonationRequestResponse>{
+
+            if (it==null){
+                dismissProgress()
+                showAlert("Sorry","Server Request failed")
+            }
+            if (it.code=="200"){
+                dismissProgress()
+                myRequestList = it.data
+                myRequests.text = it.data.size.toString()
+            }
+
+        })
+    }
+    private fun getMyDonationsAcceptedObserver() {
         myActivityViewModel.getAcceptedRequestObserver().observe(requireActivity(),Observer<DonationRequestResponse>{
 
             if (it==null){
                 showAlert("Sorry","Server Request failed")
             }
             if (it.code=="200"){
+
+                myAcceptedRequestsList = it.data
                 requestsAccepted.text = it.data.size.toString()
+
             }
 
         })
     }
 
-    private fun getMyDoantionsAccepted(roleId: String?) {
+    private fun getMyDonationsAccepted(roleId: String?) {
 
         myActivityViewModel.getAcceptedRequest(roleId!!)
+
+    }
+ private fun getMyRequests(userID: String?) {
+        showProgress()
+        myActivityViewModel.getMyRequests(userID!!)
 
     }
 
     private fun initView(view: View) {
         acceptCard = view.findViewById(R.id.card2)
         requestsAccepted = view.findViewById(R.id.accepted)
+        myRequests = view.findViewById(R.id.requested)
     }
 
     companion object {

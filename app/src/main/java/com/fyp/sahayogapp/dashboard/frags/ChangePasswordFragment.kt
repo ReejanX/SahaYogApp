@@ -1,4 +1,4 @@
-package com.fyp.sahayogapp.dashboard
+package com.fyp.sahayogapp.dashboard.frags
 
 
 import android.annotation.SuppressLint

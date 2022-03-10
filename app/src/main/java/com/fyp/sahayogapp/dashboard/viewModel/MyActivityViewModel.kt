@@ -29,4 +29,21 @@ class MyActivityViewModel : ViewModel() {
             acceptedRequestList.postValue(call)
         }
     }
+
+    lateinit var myRequestList:MutableLiveData<DonationRequestResponse>
+
+    init{
+        myRequestList = MutableLiveData()
+    }
+
+    fun getMyRequestsObserver(): MutableLiveData<DonationRequestResponse>{
+        return myRequestList
+    }
+    fun getMyRequests(userID:String){
+        viewModelScope.launch {
+            val retrofitClient = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitClient.getMyRequests(userID)
+            myRequestList.postValue(call)
+        }
+    }
 }

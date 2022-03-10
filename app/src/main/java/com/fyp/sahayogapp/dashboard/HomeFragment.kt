@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -24,20 +25,23 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.auth.AuthActivity
-import com.fyp.sahayogapp.auth.frags.LoginFragment
 import com.fyp.sahayogapp.base.BaseFragment
 import com.fyp.sahayogapp.custom.CustomTextView
 import com.fyp.sahayogapp.dashboard.adapters.RequestListAdapter
-import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
 import com.fyp.sahayogapp.dashboard.model.DonationRequestResponse
+import com.fyp.sahayogapp.dashboard.model.FCMData
 import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
+import com.fyp.sahayogapp.donation.DonationActivity
+import com.fyp.sahayogapp.notification.NotificationActivity
 import com.fyp.sahayogapp.utils.Conts.DONATION_DATA
 import com.fyp.sahayogapp.utils.PreferenceHelper.clearAutoLoginPref
 import com.fyp.sahayogapp.utils.PreferenceHelper.getAccessToken
+import com.fyp.sahayogapp.utils.PreferenceHelper.getFcmToken
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserId
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.iid.FirebaseInstanceId
 import java.util.*
 
 private const val LOCATION_REQUEST = 101
@@ -51,7 +55,9 @@ class HomeFragment : BaseFragment() {
     lateinit var requestViewModel: RequestViewModel
     lateinit var refresh: SwipeRefreshLayout
     lateinit var title: CustomTextView
-
+    lateinit var notification: ImageView
+    var fcm_token = getFcmToken()
+    var user_id = getUserId()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -80,6 +86,12 @@ class HomeFragment : BaseFragment() {
         refresh = view.findViewById(R.id.refresh)
         requestListAdapter = RequestListAdapter()
         title = view.findViewById(R.id.title)
+        notification = view.findViewById(R.id.notification)
+        notification.setOnClickListener {
+
+           openNotifications()
+        }
+
 //        title.setOnClickListener {
 //
 //            val locationPickerIntent = LocationPickerActivity.Builder()
@@ -103,7 +115,9 @@ class HomeFragment : BaseFragment() {
 //            startActivityForResult(locationPickerIntent, 122)
 //        }
         title.setOnClickListener {
-            requestLocationPermission()
+//            requestLocationPermission()
+            val token = FirebaseInstanceId.getInstance().token
+            Log.d("FCM TOKEN", "onViewCreated: " + token)
         }
         requestListAdapter.setOnDonateClick(object : RequestListAdapter.onDonateClick {
             override fun goToDetails(position: Int) {
@@ -116,9 +130,7 @@ class HomeFragment : BaseFragment() {
 
 
         })
-//        locationBtn.setOnClickListener {
-//            fetchLocation()
-//        }
+
         refresh.setOnRefreshListener {
             initViewModel()
 
@@ -132,6 +144,10 @@ class HomeFragment : BaseFragment() {
         initUserListRecycler()
     }
 
+    private fun openNotifications() {
+        startActivity(Intent(requireContext(), NotificationActivity::class.java))
+    }
+
     fun initUserListRecycler() {
         userListRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -142,6 +158,7 @@ class HomeFragment : BaseFragment() {
     fun initViewModel() {
 //    showProgress()
         requestViewModel = ViewModelProvider(this).get(RequestViewModel::class.java)
+
 
 
         requestViewModel.getDonationListObserver()
@@ -158,16 +175,33 @@ class HomeFragment : BaseFragment() {
                     }
                     else if (it.code == "401"){
 
-                        showAlert("Failed",it.message)
+                        showAlert("Failed", it.message)
                         clearAutoLoginPref(requireContext())
-                        startActivity(Intent(requireContext(),AuthActivity::class.java))
+                        startActivity(Intent(requireContext(), AuthActivity::class.java))
 
                     }
 
 
                 }
             })
+
+        requestViewModel.fcmUpdateObserver().observe(requireActivity(),
+            {
+                if (it == null) {
+
+                } else {
+                    if (it.code == "200") {
+                        Log.d(TAG, "FCM UPDATE: ${it.message} : $fcm_token")
+
+
+                    }
+                }
+            })
         requestViewModel.getDonationList()
+        val fcmData = FCMData(fcm_token!!, user_id!!)
+        requestViewModel.updateFcm(
+            fcmData
+        )
     }
 
 

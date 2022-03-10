@@ -43,8 +43,18 @@ interface ApiInterface {
     @POST(API_URL.ACCEPT_REQUEST)
     suspend fun acceptDonationRequest(@Body params:AcceptDonation): APIResponse
 
+    @POST(API_URL.FCM_UPDATE)
+    suspend fun updateFcmToken(@Body params: FCMData): APIResponse
+
     @GET(API_URL.GET_MY_ACCEPTED_DONATIONS)
     suspend fun  getMyAcceptedDonations(@Query("id")donorID: String): DonationRequestResponse
+
+    @GET(API_URL.GET_MY_REQUESTS)
+    suspend fun  getMyRequests(@Query("id")donorID: String): DonationRequestResponse
+
+    @GET(API_URL.GET_NOTIFICATIONS)
+    suspend fun  getNotifications(@Query("id")userID: String): NotificationResponse
+
 
 
 }

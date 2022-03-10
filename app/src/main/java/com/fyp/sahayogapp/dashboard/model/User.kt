@@ -96,3 +96,25 @@ val latitude : String,
 val longitude : String
 )
 
+data class FCMData(
+    val fcm_token :String,
+    val user_id: String
+)
+
+data class NotificationData(
+    val notification_id:String,
+    val title : String,
+    val body :String ,
+    val recipient: String,
+    val time:String
+
+            )
+
+data class NotificationResponse (
+    val success : String,
+    val code : String,
+    val message : String,
+    val data: List<NotificationData>
+
+        )
+

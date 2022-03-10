@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/layout/activity_donation.xml" value="0.25493716337522443" />
         <entry key="app/src/main/res/layout/activity_donation2.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21240942028985507" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="1.0" />
         <entry key="app/src/main/res/layout/base_layout.xml" value="0.2703125" />
@@ -63,6 +64,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25964241393174375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.22327898550724637" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1671875" />
+        <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.183203125" />
         <entry key="app/src/main/res/layout/fragment_o_t_p.xml" value="0.34512507800136993" />
         <entry key="app/src/main/res/layout/fragment_password.xml" value="0.4473007712082262" />
         <entry key="app/src/main/res/layout/fragment_post_donation_request.xml" value="0.28854166666666664" />
@@ -74,6 +76,7 @@
         <entry key="app/src/main/res/layout/fragment_user_type.xml" value="0.22327898550724637" />
         <entry key="app/src/main/res/layout/home_frag_new.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/no_internet.xml" value="0.25317028985507245" />
+        <entry key="app/src/main/res/layout/notification_layout.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/on_boarding_layout.xml" value="0.22327898550724637" />
         <entry key="app/src/main/res/layout/order_card_layout.xml" value="0.45" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3548717948717949" />

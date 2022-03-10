@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/donationDetailFragment"
-        android:name="com.fyp.sahayogapp.dashboard.DonationDetailFragment"
+        android:name="com.fyp.sahayogapp.dashboard.frags.DonationDetailFragment"
         android:label="fragment_donation_detail"
         tools:layout="@layout/fragment_donation_detail" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.fyp.sahayogapp.dashboard.ChangePasswordFragment"
+        android:name="com.fyp.sahayogapp.dashboard.frags.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" >
         <action

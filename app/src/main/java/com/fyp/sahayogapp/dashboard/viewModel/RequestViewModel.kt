@@ -99,6 +99,29 @@ class RequestViewModel : ViewModel(){
         }
     }
 
+    lateinit var fcmUpdate: MutableLiveData<APIResponse?>
+
+    init {
+        fcmUpdate= MutableLiveData()
+    }
+
+    fun fcmUpdateObserver(): MutableLiveData<APIResponse?>{
+
+        return fcmUpdate
+    }
+
+    fun updateFcm(fcmData: FCMData){
+
+        viewModelScope.launch(IO) {
+            val retrofitInstance = RetrofitClient.getRetrofitInstance().create(ApiInterface::class.java)
+            val call = retrofitInstance.updateFcmToken(fcmData)
+            fcmUpdate.postValue(call)
+        }
+    }
+
+
+
+
 
 }
 

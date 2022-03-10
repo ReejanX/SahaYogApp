@@ -1,7 +1,5 @@
-package com.fyp.sahayogapp.dashboard
+package com.fyp.sahayogapp.dashboard.frags
 
-import android.app.DatePickerDialog
-import android.icu.text.CaseMap
 import android.location.Geocoder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -20,23 +18,17 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.Navigation
 import com.fyp.sahayogapp.base.BaseFragment
-import com.fyp.sahayogapp.dashboard.model.APIResponse
 import com.fyp.sahayogapp.dashboard.model.AcceptDonation
-import com.fyp.sahayogapp.dashboard.model.HospitalInfoResponse
 import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
 import com.fyp.sahayogapp.utils.Conts.DONOR
-import com.fyp.sahayogapp.utils.Conts.HOSPITAL
 import com.fyp.sahayogapp.utils.DateFormatter.getDateParsed
 import com.fyp.sahayogapp.utils.PreferenceHelper.getRoleID
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import org.w3c.dom.Text
-import java.text.SimpleDateFormat
 import java.util.*
 
 
