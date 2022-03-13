@@ -25,6 +25,9 @@
         android:theme="@style/Theme.SahayogApp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".mapview.MapViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".notification.NotificationActivity"
             android:exported="false" />
 
@@ -32,7 +35,7 @@
             android:name=".utils.FCMNotificationService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -49,7 +52,7 @@
 
         <activity
             android:name=".dashboard.DashActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="com.adevinta.leku.LocationPickerActivity"
             android:exported="true"

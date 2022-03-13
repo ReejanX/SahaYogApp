@@ -1,31 +1,43 @@
 package com.fyp.sahayogapp.dashboard.frags
 
+import android.Manifest
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import com.fyp.sahayogapp.R
-import com.fyp.sahayogapp.custom.CustomTextView
-import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
-import com.fyp.sahayogapp.utils.Conts.DONATION_DATA
-import com.fyp.sahayogapp.utils.DateFormatter.convertDate
-import android.content.Intent
-import android.net.Uri
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import com.fyp.sahayogapp.R
 import com.fyp.sahayogapp.base.BaseFragment
+import com.fyp.sahayogapp.custom.CustomTextView
 import com.fyp.sahayogapp.dashboard.model.AcceptDonation
+import com.fyp.sahayogapp.dashboard.model.DonationRequestModel
 import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
+import com.fyp.sahayogapp.utils.Conts.CALL_PHONE
+import com.fyp.sahayogapp.utils.Conts.DESTINATION_LAT_LONG
+import com.fyp.sahayogapp.utils.Conts.DONATION_DATA
 import com.fyp.sahayogapp.utils.Conts.DONOR
+import com.fyp.sahayogapp.utils.Conts.LOCATION_REQUEST
+import com.fyp.sahayogapp.utils.Conts.MY_LOCATION_LAT_LONG
+import com.fyp.sahayogapp.utils.DateFormatter.convertDate
 import com.fyp.sahayogapp.utils.DateFormatter.getDateParsed
 import com.fyp.sahayogapp.utils.PreferenceHelper.getRoleID
 import com.fyp.sahayogapp.utils.PreferenceHelper.getUserRole
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -41,6 +53,7 @@ class DonationDetailFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var data: DonationRequestModel? = null
 
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     private lateinit var remainingUnitTV: CustomTextView
     private lateinit var bloodGroup:CustomTextView
@@ -57,7 +70,8 @@ class DonationDetailFragment : BaseFragment() {
     private lateinit var openTime: CustomTextView
     private lateinit var closeTime: CustomTextView
     private lateinit var backbtn: ImageButton
-    private lateinit var apointmentBtn : ImageButton
+    private lateinit var mapBtn: ImageButton
+    private lateinit var apointmentBtn: ImageButton
     private lateinit var message : TextView
     private lateinit var requestViewModel: RequestViewModel
     private lateinit var donateBtn : Button
@@ -83,19 +97,24 @@ class DonationDetailFragment : BaseFragment() {
         requestViewModel = ViewModelProvider(this).get(RequestViewModel::class.java)
         initView(view)
         acceptDonationObserver()
+
+
         backbtn.setOnClickListener {
-            Navigation.findNavController(backbtn).navigate(R.id.action_donationDetailFragment_to_nav_home)
+            Navigation.findNavController(backbtn)
+                .navigate(R.id.action_donationDetailFragment_to_nav_home)
+        }
+
+
+        mapBtn.setOnClickListener {
+                requestLocationPermission()
         }
         call.setOnClickListener {
-
-
-            val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse("tel:${data?.user_phone}")
-            startActivity(callIntent)
+            requestCallPermission()
         }
-        donateBtn.setOnClickListener { 
-            if (userRole!= DONOR){
-                showAlert("Unauthorized","Only User who are donor can accept a Request")
+
+        donateBtn.setOnClickListener {
+            if (userRole != DONOR) {
+                showAlert("Unauthorized", "Only User who are donor can accept a Request")
                 return@setOnClickListener
             }
 
@@ -127,8 +146,56 @@ class DonationDetailFragment : BaseFragment() {
 
     }
 
-    private fun initView(view: View) {
+    private fun requestCallPermission() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                android.Manifest.permission.CALL_PHONE)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
 
+            makeCall()
+        } else {
+
+
+            requestPermissions(
+                arrayOf(Manifest.permission.CALL_PHONE),
+                CALL_PHONE)
+
+        }
+    }
+
+    private fun requestLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            openMaps()
+        } else {
+
+
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_REQUEST)
+
+        }
+    }
+
+    private fun makeCall() {
+
+        showAlert("Confirm",
+            "Do you want to call ${data?.user_name} on ${data?.user_phone} ?",
+            "Call",
+            DialogInterface.OnClickListener { dialog, which ->
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = Uri.parse("tel:${data?.user_phone}")
+                startActivity(callIntent)
+            })
+
+    }
+
+    private fun initView(view: View) {
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
         remainingUnitTV = view.findViewById(R.id.remainingUnitTV)
         bloodGroup = view.findViewById(R.id.bloodType)
         donationType = view.findViewById(R.id.requestTypeTV)
@@ -145,6 +212,7 @@ class DonationDetailFragment : BaseFragment() {
         message = view.findViewById(R.id.messageTV)
         backbtn = view.findViewById(R.id.backBtn)
         call = view.findViewById(R.id.callBtn)
+        mapBtn = view.findViewById(R.id.mapBtn)
         donateBtn = view.findViewById(R.id.donate)
         apointmentBtn = view.findViewById(R.id.appointment)
         remainingUnitTV.text = data?.remaining_unit
@@ -200,15 +268,109 @@ class DonationDetailFragment : BaseFragment() {
                
            }
            if (it?.code=="200"){
-               
+
                dismissProgress()
-               showAlert("Success",it.message)
-           }
-           else{
+               showAlert("Success", it.message)
+           } else {
                dismissProgress()
-               showAlert("Sorry",it?.message)
+               showAlert("Sorry", it?.message)
            }
        })
+   }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CALL_PHONE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                makeCall()
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CALL_PHONE)) {
+                    ActivityCompat.requestPermissions(requireActivity()!!,
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        CALL_PHONE)
+                } else {
+
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Permission Required")
+                        .setMessage("This app requires access to Phone Call to proceed. Would you like to open setting and grant permission?")
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Open Settings",
+                            DialogInterface.OnClickListener { dialog, which ->
+                                startActivityForResult(Intent().apply {
+                                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                    data = Uri.fromParts(
+                                        "package",
+                                        requireActivity().packageName,
+                                        null
+                                    )
+                                }, CALL_PHONE)
+                            })
+                        .show()
+
+                }
+
+            }
+        }
+        if (requestCode == LOCATION_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openMaps()
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    ActivityCompat.requestPermissions(requireActivity()!!,
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        LOCATION_REQUEST)
+                } else {
+
+                    AlertDialog.Builder(requireContext())
+                        .setTitle("Permission Required")
+                        .setMessage("This app requires access to Location Access to proceed. Would you like to open setting and grant permission?")
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Open Settings",
+                            DialogInterface.OnClickListener { dialog, which ->
+                                startActivityForResult(Intent().apply {
+                                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                    data = Uri.fromParts(
+                                        "package",
+                                        requireActivity().packageName,
+                                        null
+                                    )
+                                }, LOCATION_REQUEST)
+                            })
+                        .show()
+
+                }
+
+            }
+        }
+    }
+
+    private fun openMaps() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val task = fusedLocationProviderClient.lastLocation
+            task.addOnSuccessListener {
+                if (it != null) {
+                    var destination = "${data?.latitude},${data?.longitude}"
+                    var myLocation = "${it.latitude},${it.longitude}"
+                    var bundle = Bundle()
+                    bundle.putString(DESTINATION_LAT_LONG, destination)
+                    bundle.putString(MY_LOCATION_LAT_LONG, myLocation)
+                    Navigation.findNavController(mapBtn)
+                        .navigate(R.id.action_donationDetailFragment_to_mapViewFragment, bundle)
+                }
+            }
+        }
+        else{
+
+            Toast.makeText(requireContext(), "Location Fetch failed", Toast.LENGTH_SHORT).show()
+        }
     }
 
 //    companion object {
@@ -230,4 +392,5 @@ class DonationDetailFragment : BaseFragment() {
 //                }
 //            }
 //    }
+
 }

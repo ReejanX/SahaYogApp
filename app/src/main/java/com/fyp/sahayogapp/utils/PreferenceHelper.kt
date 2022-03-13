@@ -10,18 +10,20 @@ import com.fyp.sahayogapp.utils.Conts.KEY_ROLE_ID
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_ID
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_NAME
 import com.fyp.sahayogapp.utils.Conts.KEY_USER_ROLE
+import com.fyp.sahayogapp.utils.Conts.PREF_FCM
 import com.fyp.sahayogapp.utils.Conts.PREF_NAME
 import com.fyp.sahayogapp.utils.Conts.WALKTHROUGH_SEEN
 
 lateinit var editor: SharedPreferences.Editor
 lateinit var pref: SharedPreferences
-
+lateinit var fcmPref :SharedPreferences
 
 object PreferenceHelper {
 
 
     fun initPref(context: Context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        fcmPref = context.getSharedPreferences(PREF_FCM, Context.MODE_PRIVATE)
         editor = pref!!.edit()
     }
 
@@ -48,7 +50,7 @@ object PreferenceHelper {
     }
 
     fun saveFcmToken(token: String) {
-        val p: SharedPreferences.Editor = pref.edit()
+        val p: SharedPreferences.Editor = fcmPref.edit()
         with(p) {
             putString(KEY_FCM_TOKEN, "$token")
             commit()
@@ -75,11 +77,11 @@ object PreferenceHelper {
 
 
     fun getAccessToken() = pref.getString(KEY_ACCESS_TOKEN, "token")
-    fun getFcmToken() = pref.getString(KEY_FCM_TOKEN, null)
-    fun getUserId() = pref.getString(KEY_USER_ID, null)
-    fun getUserRole() = pref.getString(KEY_USER_ROLE, null)
-    fun getRoleID() = pref.getString(KEY_ROLE_ID, null)
-    fun getFcmTokenServerId() = pref.getString(KEY_FCM_TOKEN_SERVER_ID, null)
+    fun getFcmToken() = fcmPref.getString(KEY_FCM_TOKEN, "")
+    fun getUserId() = pref.getString(KEY_USER_ID, "")
+    fun getUserRole() = pref.getString(KEY_USER_ROLE, "")
+    fun getRoleID() = pref.getString(KEY_ROLE_ID, "")
+    fun getFcmTokenServerId() = pref.getString(KEY_FCM_TOKEN_SERVER_ID, "")
 
     fun clearPref() {
         editor.run {

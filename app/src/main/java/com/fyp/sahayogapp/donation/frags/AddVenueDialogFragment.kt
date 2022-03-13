@@ -175,7 +175,7 @@ class AddVenueDialogFragment : DialogFragment() {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
                     ActivityCompat.requestPermissions(requireActivity()!!,
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                        AuthActivity.MY_PERMISSIONS_REQUEST_LOCATION)
+                        LOCATION_REQUEST)
                 } else {
 
                     AlertDialog.Builder(requireContext())

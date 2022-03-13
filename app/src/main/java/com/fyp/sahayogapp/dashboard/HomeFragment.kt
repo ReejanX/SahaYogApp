@@ -31,7 +31,6 @@ import com.fyp.sahayogapp.dashboard.adapters.RequestListAdapter
 import com.fyp.sahayogapp.dashboard.model.DonationRequestResponse
 import com.fyp.sahayogapp.dashboard.model.FCMData
 import com.fyp.sahayogapp.dashboard.viewModel.RequestViewModel
-import com.fyp.sahayogapp.donation.DonationActivity
 import com.fyp.sahayogapp.notification.NotificationActivity
 import com.fyp.sahayogapp.utils.Conts.DONATION_DATA
 import com.fyp.sahayogapp.utils.PreferenceHelper.clearAutoLoginPref
@@ -145,7 +144,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun openNotifications() {
-        startActivity(Intent(requireContext(), NotificationActivity::class.java))
+        startActivity(Intent(context, NotificationActivity::class.java))
     }
 
     fun initUserListRecycler() {
@@ -164,6 +163,7 @@ class HomeFragment : BaseFragment() {
         requestViewModel.getDonationListObserver()
             .observe(requireActivity(), Observer<DonationRequestResponse> {
                 if (it == null) {
+                    refresh.isRefreshing = false
 //                dismissProgress()
 //                showAlert("Sorry!","No results Found!")
                 } else {
@@ -172,16 +172,28 @@ class HomeFragment : BaseFragment() {
 //                dismissProgress()
                         refresh.isRefreshing = false
                         requestListAdapter.notifyDataSetChanged()
+                    } else {
+                        if (it.code == "401") {
+                            refresh.isRefreshing = false
+
+                            showAlert("Failed", it.message, "Ok",
+                                DialogInterface.OnClickListener { dialog, which ->
+                                    clearAutoLoginPref(requireContext())
+                                    startActivity(Intent(requireContext(),
+                                        AuthActivity::class.java))
+                                }
+                            )
+
+
+                        }
+                        if (it.code == "204") {
+                            refresh.isRefreshing = false
+//                        view?.findViewById<CardView>(R.id.card)?.visibility=View.VISIBLE
+                            showAlert("", it.message)
+                        }
+
+
                     }
-                    else if (it.code == "401"){
-
-                        showAlert("Failed", it.message)
-                        clearAutoLoginPref(requireContext())
-                        startActivity(Intent(requireContext(), AuthActivity::class.java))
-
-                    }
-
-
                 }
             })
 

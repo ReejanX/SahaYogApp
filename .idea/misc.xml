@@ -37,6 +37,7 @@
         <entry key="app/src/main/res/drawable/drop.xml" value="0.3509259259259259" />
         <entry key="app/src/main/res/drawable/home.xml" value="0.3765625" />
         <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.3765625" />
+        <entry key="app/src/main/res/drawable/ic_baseline_directions_24.xml" value="0.282421875" />
         <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.3765625" />
         <entry key="app/src/main/res/drawable/ic_thopa.xml" value="0.16354166666666667" />
         <entry key="app/src/main/res/drawable/location.xml" value="0.2598958333333333" />
@@ -49,6 +50,7 @@
         <entry key="app/src/main/res/layout/activity_donation.xml" value="0.25493716337522443" />
         <entry key="app/src/main/res/layout/activity_donation2.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/activity_map_view.xml" value="0.16328125" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.2703125" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.21240942028985507" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="1.0" />
@@ -59,10 +61,11 @@
         <entry key="app/src/main/res/layout/fragment_add_venue.xml" value="0.1796875" />
         <entry key="app/src/main/res/layout/fragment_bb_signup.xml" value="0.22327898550724637" />
         <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.3463541666666667" />
-        <entry key="app/src/main/res/layout/fragment_donation_detail.xml" value="0.3755958055290753" />
+        <entry key="app/src/main/res/layout/fragment_donation_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25964241393174375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.22327898550724637" />
+        <entry key="app/src/main/res/layout/fragment_map_view.xml" value="0.25580601092896177" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.183203125" />
         <entry key="app/src/main/res/layout/fragment_o_t_p.xml" value="0.34512507800136993" />

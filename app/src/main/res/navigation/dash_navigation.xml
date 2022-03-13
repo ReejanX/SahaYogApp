@@ -49,6 +49,9 @@
             app:destination="@id/nav_home"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_donationDetailFragment_to_mapViewFragment"
+            app:destination="@id/mapViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/changePasswordFragment"
@@ -61,4 +64,9 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/mapViewFragment"
+        android:name="com.fyp.sahayogapp.dashboard.frags.MapViewFragment"
+        android:label="fragment_map_view"
+        tools:layout="@layout/fragment_map_view" />
 </navigation>

@@ -93,6 +93,11 @@ class ReportFragment : BaseFragment() {
                 myRequestList = it.data
                 myRequests.text = it.data.size.toString()
             }
+            else {
+                dismissProgress()
+
+
+            }
 
         })
     }
@@ -106,6 +111,11 @@ class ReportFragment : BaseFragment() {
 
                 myAcceptedRequestsList = it.data
                 requestsAccepted.text = it.data.size.toString()
+
+            }
+            else {
+                dismissProgress()
+
 
             }
 
